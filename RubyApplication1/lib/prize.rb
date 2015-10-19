@@ -4,7 +4,7 @@
 
 class Prize
   attr_accessor :treasures
-  attr_aceessor :level
+  attr_accessor :level
   def initialize(treasures,level)
     @treasures = treasures;
     @level = level;

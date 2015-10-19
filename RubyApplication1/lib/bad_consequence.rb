@@ -1,15 +1,15 @@
-# To change this license header, choose License Headers in Project Properties.
+  # To change this license header, choose License Headers in Project Properties.
 # To change this template file, choose Tools | Templates
 # and open the template in the editor.
 
 class BadConsequence
   attr_accessor :text
-  attr_accesor :levels
-  attr_accesor :nVisiblesTreasures
-  attr_accesor :nHiddenTreasures
-  attr_accesor :death
-  attr_accesor :specificHiddenTreasures
-  attr_accesor :specificVisibleTreasures
+  attr_accessor :levels
+  attr_accessor :nVisiblesTreasures
+  attr_accessor :nHiddenTreasures
+  attr_accessor :death
+  attr_accessor :specificHiddenTreasures
+  attr_accessor :specificVisibleTreasures
   
   def initialize(text, levels, nVisiblesTreasures, nHiddenTreasures)
     @text = text
@@ -18,16 +18,16 @@ class BadConsequence
     @nHiddenTreasures = nHiddenTreasures
   end
   
-  def initialize(text, levels, specificHiddenTreasures, specificVisibleTreasures)
-    @text = text
-    @levels = levels
-    @specificHiddenTreasures = specificHIddenTreasures
-    @specificVisibleTreasures = specificVisibleTreasures
+  def self.newConstructor(text, levels, specificHiddenTreasures, specificVisibleTreasures)
+    nuevoObj = allocate
+    nuevoObj.send(:initialize,text,levels,specificHIddenTreasures,specificVisibleTreasures)
+    nuevoObj
   end
   
-  def initialize(text,death)
-    @text = text
-    @death = death
+  def self.newConstructor2(text,death)
+    nuevoObj2 = allocate
+    nuevoObj2.send(:initialize, text, death, nil, nil)
+    nuevoObj2
   end
   #CONSULTORES
   def text
