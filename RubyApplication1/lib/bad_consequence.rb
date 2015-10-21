@@ -1,6 +1,8 @@
   # To change this license header, choose License Headers in Project Properties.
 # To change this template file, choose Tools | Templates
 # and open the template in the editor.
+#!/bin/env ruby
+# encoding: utf-8
 
 class BadConsequence
   attr_accessor :text, :levels, :nVisiblesTreasures, :nHiddenTreasures, :death, :specificHiddenTreasures, :specificVisibleTreasures
@@ -31,17 +33,14 @@ class BadConsequence
     
   end
   
- 
-  
-
   def to_s
     
     "#{@text} \n Niveles que se pierden: #{@levels} 
     \n Tesoros visibles que se pierden: #{@nVisiblesTreasures} 
-    \n Tesoros ocultos que se pierden #{@nHiddenTreasures} 
-    \n Tesoros visibles específicos que se pierden #{@specificVisibleTreasures.to_s}
-    \n Tesoros ocultos específicos que se pierden #{@specificHiddenTreasures.to_s}
-    "
+    \n Tesoros ocultos que se pierden: #{@nHiddenTreasures}
+    \n Tesoros visibles especificos que se pierden: #{@specificVisibleTreasures}
+    \n Tesoros ocultos especificos que se pierden: #{@specificHiddenTreasures}
+    \n Muerte: #{@death}"
   end
 
   
