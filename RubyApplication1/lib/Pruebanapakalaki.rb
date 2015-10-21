@@ -21,8 +21,17 @@ premio = Prize.new(5,3)
 #prueba monster
 #monstruo = Monster.new("pepito el monstruo", 5, mal_rollo, premio)
 
+#DEFINICION MAZO CARTAS
 monsters = Array.new
 
-#puts mal_rollo.levels
+#El rey de la rosa
+price = Prize.new(4,2)
+badConsequence = BadConsequence.newLevelNumberOfTreasures("Pierdes 5 niveles y 3 tesoros visibles",5 , 3, 0)
+monsters << Monster.new("El rey de rosa",13,prize,badConsequence)
 
-#puts premio.treasures
+#Ángeles de la noche ibicenca
+prize = Prize.new(4,1)
+badConsequence = BadConsequence.newLevelSpecificTreasures("Te atrapan para llevarte de fiesta y te dejan caer en mitad del vuelo. Descarta 1 mano visible y 1 mano oculta", 0, [TreasureKind::ONEHAND], [TreasureKind::ONEHAND])
+monsters<< Monster.new("Ángeles de la noche ibicenca", 14, prize, badConsequence)
+
+#
