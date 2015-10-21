@@ -7,14 +7,17 @@ require_relative 'monster.rb'
 puts "Creacion de objetos de prueba de las distinta clases creadas"
 
 #prueba bad consequence
-mal_rollo = BadConsequence.new("hola",5,3,2)
+mal_rollo = BadConsequence.initialize("hola",5,3,2,Array.new, Array.new, 0)
+
 #prueba Prize
-premio = Prize.new(5, 3)
+premio = Prize.initialize(5, 3)
+
 #prueba monster
-monstruo = Monster.new("pepito el monstruo", 5, mal_rollo, premio)
+monstruo = Monster.initialize("pepito el monstruo", 5, mal_rollo, premio)
 
-puts monstruo.combatLevel
+a = [4,5]
+puts a
 
-puts mal_rollo.levels
+#puts mal_rollo.levels
 
-puts premio.treasures
+#puts premio.treasures

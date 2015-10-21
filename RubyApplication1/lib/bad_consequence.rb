@@ -3,59 +3,45 @@
 # and open the template in the editor.
 
 class BadConsequence
-  attr_accessor :text
-  attr_accessor :levels
-  attr_accessor :nVisiblesTreasures
-  attr_accessor :nHiddenTreasures
-  attr_accessor :death
-  attr_accessor :specificHiddenTreasures
-  attr_accessor :specificVisibleTreasures
+  attr_accessor :text, :levels, :nVisiblesTreasures, :nHiddenTreasures, :death, :specificHiddenTreasures, :specificVisibleTreasures
+  private_class_method :new
   
-  def initialize(text, levels, nVisiblesTreasures, nHiddenTreasures)
-    @text = text
-    @levels = levels
-    @nVisiblesTreasures = nVisiblesTreasures
-    @nHiddenTreasures = nHiddenTreasures
+  def initialize(aText, someLevels, someVisiblesTreasures, someHiddenTreasures, someSpecificHiddenTreasures, someSpecificVisibleTreasures, death)
+    @text = aText
+    @levels = someLevels
+    @nVisiblesTreasures = someVisiblesTreasures
+    @nHiddenTreasures = someHiddenTreasures
+    @specificHiddenTreasures = someSpecificHiddenTreasures
+    @specificVisibleTreasures = someSpecificVisibleTreasures
+    @death = death
   end
   
-  def self.newConstructor(text, levels, specificHiddenTreasures, specificVisibleTreasures)
-    nuevoObj = allocate
-    nuevoObj.send(:initialize,text,levels,specificHIddenTreasures,specificVisibleTreasures)
-    nuevoObj
+  
+  def BadConsequence.newLevelNumberOfTreasures(aText, someLevels, someVisibleTreasures, someHiddenTreasures)
+    new(aText, someLevels, someVisibleTreasures, someHiddenTreasures, Array.new, Array.new ,0)
+  end   
+    
+  def BadConsequence.newLevelSpecificTreasures(aText, someLevels, someSpecificVisibleTreasures, someSpecificHiddenTreasures)
+    new(aText, someLevels, someSpecificVisibleTreasures, somSpecificHiddenTreasures,0 , Array.new, Array.new)
+    
   end
   
-  def self.newConstructor2(text,death)
-    nuevoObj2 = allocate
-    nuevoObj2.send(:initialize, text, death, nil, nil)
-    nuevoObj2
-  end
-  #CONSULTORES
-  def text
-    @text
+  def BadConsequence.newDeath(aText, death)
+    new(aText, 0, 0 ,0, death, Array.new, Array.new )
+    
+    
   end
   
-  def levels
-    @levels
-  end
-  
-  def nVisiblesTreasures
-    @nVisiblesTreasures
-  end
-  
-  def nHiddenTreasures
-    @nHiddenTreasures
-  end
-  
-  def death
-    @death
-  end
-  
-  def specificHiddenTreasures
-    @specificHiddenTreasures
-  end
  
-  def specificVisibleTreasures
-    @specificVisibleTreasures
+  
+
+  def to_s
+    "#{@text} \n Niveles que se pierden: #{@levels} 
+     \n Tesoros visibles que se pierden: #{@nVisiblesTreasures} 
+     \n Tesoros ocultos que se pierden: #{@nHiddenTreasures}
+     \n Tesoros ocultos específicos que se pierden #{@specificHiddenTreasures}  
+     \n Tesoros visibles específicos que se pierden: #{@specificVisibleTreasures}"
   end
+
   
 end

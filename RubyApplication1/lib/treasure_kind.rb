@@ -9,11 +9,34 @@ class TreasureKind
   attr_accesor :helmet
   attr_accesor :shoes
   
-  def initialize
-    @ARMOR =:armor
-    @ONEHAND =:onehand
-    @BOTHHANDS =:bothhands
-    @HELMET =:helmet
-    @SHOES  =:shoes
+  def self.initialize(armor, onehand, bothhands, helmet, shoes)
+    @armor = armor
+    @onehand = onehand
+    @bothhands = bothhands
+    @helmet = helmet
+    @shoes = shoes
+    
+    
   end
+  def to_s(armor, onehand, bothhands, helmet, shoes)
+    @Override
+    solucion = "";
+    puts case this
+    when armor
+       solucion = "ARMOR"
+    when onehand
+       solucion = "ONEHAND"
+    when bothhands
+       solucion = "BOTHHANDS"
+    when helmet
+       solucion = "HELMET"
+    when shoes
+       solucion = "SHOES"
+    else
+    end
+    solucion
+  end
+    
+    
+  
 end
