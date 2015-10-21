@@ -6,7 +6,7 @@ class Prize
   attr_accessor :treasures
   attr_accessor :level
   
-  def self.initialize(treasures,level)
+  def initialize(treasures,level)
    @treasures = treasures
    @level = level
   end
