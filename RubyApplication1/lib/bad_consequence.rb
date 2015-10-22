@@ -35,12 +35,13 @@ class BadConsequence
   
   def to_s
     
-    "#{@text} \n Niveles que se pierden: #{@levels} 
-    \n Tesoros visibles que se pierden: #{@nVisiblesTreasures} 
-    \n Tesoros ocultos que se pierden: #{@nHiddenTreasures}
-    \n Tesoros visibles especificos que se pierden: #{@specificVisibleTreasures}
-    \n Tesoros ocultos especificos que se pierden: #{@specificHiddenTreasures}
-    \n Muerte: #{@death}"
+    "\n#{@text} 
+    \nNiveles que se pierden: #{@levels} 
+    \nTesoros visibles que se pierden: #{@nVisiblesTreasures} 
+    \nTesoros ocultos que se pierden: #{@nHiddenTreasures}
+    \nTesoros visibles especificos que se pierden: #{@specificVisibleTreasures}
+    \nTesoros ocultos especificos que se pierden: #{@specificHiddenTreasures}
+    \nMuerte: #{@death}"
   end
 
   

@@ -25,13 +25,24 @@ premio = Prize.new(5,3)
 monsters = Array.new
 
 #El rey de la rosa
-price = Prize.new(4,2)
+prize = Prize.new(4,2)
 badConsequence = BadConsequence.newLevelNumberOfTreasures("Pierdes 5 niveles y 3 tesoros visibles",5 , 3, 0)
 monsters << Monster.new("El rey de rosa",13,prize,badConsequence)
 
 #Ángeles de la noche ibicenca
 prize = Prize.new(4,1)
 badConsequence = BadConsequence.newLevelSpecificTreasures("Te atrapan para llevarte de fiesta y te dejan caer en mitad del vuelo. Descarta 1 mano visible y 1 mano oculta", 0, [TreasureKind::ONEHAND], [TreasureKind::ONEHAND])
-monsters<< Monster.new("Ángeles de la noche ibicenca", 14, prize, badConsequence)
+monsters<< Monster.new("Angeles de la noche ibicenca", 14, prize, badConsequence)
 
 #
+
+#COMPROBACIONES
+
+puts "Tienen un nivel de combate superior a 10: \n\n"
+
+for i in monsters
+  if (i.combatLevel > 10) then
+    puts i.to_s
+    puts "\n"
+  end
+end
