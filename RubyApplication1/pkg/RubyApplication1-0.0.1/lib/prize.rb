@@ -14,7 +14,8 @@ class Prize
   end
   
   def to_s
-    "\nTesoros ganados: #{@treasures} \nNiveles ganados: #{@level}"
+    "\n     Tesoros ganados: #{@treasures}   
+     Niveles ganados: #{@level}"
   end
  
 end

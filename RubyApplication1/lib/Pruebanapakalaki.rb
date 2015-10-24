@@ -48,7 +48,7 @@ for iterador in monsters
   end
 end
 
-puts "Tienen un mal rollo que implica solo perdida de niveles: \n"
+puts "Tienen un mal rollo que implica solo perdida de niveles: \n\n"
 
 for iterador in monsters
   if (iterador.malRollo.levels > 0) then
@@ -57,7 +57,7 @@ for iterador in monsters
   end
 end
 
-puts "Su buen rollo indica una ganancia de niveles superior  a 1: \n"
+puts "Su buen rollo indica una ganancia de niveles superior  a 1: \n\n"
 
 for iterador in monsters
   if (iterador.premio.level > 1) then
@@ -66,22 +66,22 @@ for iterador in monsters
   end
 end
 
-puts "Su mal rollo supone la perdida de tesoros 'ARMOR', tanto visibles como ocultos: \n"
+puts "Su mal rollo supone la perdida de tesoros 'ARMOR', tanto visibles como ocultos: \n\n"
 
 for iterador in monsters
   primero = TreasureKind
   segundo = TreasureKind
-  auxVisibles = iterador.BadConsequence.specificVisibleTreasures
-  auxOcultos = iterador.BadConsequence.specificHiddenTreasures
+  auxVisibles = iterador.malRollo.specificVisibleTreasures
+  auxOcultos = iterador.malRollo.specificHiddenTreasures
   
   for primero in auxVisibles
-    if("ARMOR".equals(primero.to_s) then
+    if("ARMOR".equal?(primero.to_s)) then
         puts iterador.to_s
         puts "\n"
     end
   end
   for segundo in auxOcultos
-    if ("ARMOR".equals(segundo.to_s) then
+    if ("ARMOR".equal?(segundo.to_s)) then
         puts iterador.to_s
         puts "\n"
     end
