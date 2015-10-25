@@ -31,7 +31,7 @@ monsters << Monster.new("El rey de rosa",13,prize,badConsequence)
 
 #Ángeles de la noche ibicenca
 prize = Prize.new(4,1)
-badConsequence = BadConsequence.newLevelSpecificTreasures("Te atrapan para llevarte de fiesta y te dejan caer en mitad del vuelo. Descarta 1 mano visible y 1 mano oculta", 0, [TreasureKind::ONEHAND], [TreasureKind::ONEHAND])
+badConsequence = BadConsequence.newLevelSpecificTreasures("Te atrapan para llevarte de fiesta y te dejan caer en mitad del vuelo. Descarta 1 mano visible y 1 mano oculta", 0, [TreasureKind::ARMOR], [TreasureKind::ARMOR])
 monsters<< Monster.new("Angeles de la noche ibicenca", 14, prize, badConsequence)
 
 #
@@ -75,13 +75,13 @@ for iterador in monsters
   auxOcultos = iterador.malRollo.specificHiddenTreasures
   
   for primero in auxVisibles
-    if("ARMOR".equal?(primero.to_s)) then
+    if("armor".equal?(primero.to_s)) then
         puts iterador.to_s
         puts "\n"
     end
   end
   for segundo in auxOcultos
-    if ("ARMOR".equal?(segundo.to_s)) then
+    if ("armor".equal?(segundo.to_s)) then
         puts iterador.to_s
         puts "\n"
     end

@@ -10,16 +10,6 @@ require_relative 'monster.rb'
 require_relative 'treasure_kind.rb'
 
 
-#puts "Creacion de objetos de prueba de las distinta clases creadas"
-
-#prueba bad consequence
-mal_rollo = BadConsequence.newLevelNumberOfTreasures("hola",5,3,5)
-
-#prueba Prize
-premio = Prize.new(5,3)
-
-#prueba monster
-#monstruo = Monster.new("pepito el monstruo", 5, mal_rollo, premio)
 
 #DEFINICION MAZO CARTAS
 monsters = Array.new
@@ -30,12 +20,12 @@ monsters << Monster.new("3 Byakhees de bonanza",8,prize,badConsequence)
 
 #Chibithulhu
 prize = Prize.new(1,1)
-badConsequence = BadConsequence.newLevelSpecificTreasures("Embobados con el lindo primigenio te descartas de tu casco visible", 0, [TreasureKind::HELMET])
+badConsequence = BadConsequence.newLevelSpecificTreasures("Embobados con el lindo primigenio te descartas de tu casco visible",0,[TreasureKind::HELMET],0)
 monsters << Monster.new("Chibithulhu",2,prize,badConsequence)
 
 #El sopor de Dunwich
 prize = Prize.new(1,1)
-badConsequence = BadConsequence.newLevelSpecificTreasures("El primordial bostezo contagioso. Pierdes el calzado visible", 0, [TreasureKind::SHOES])
+badConsequence = BadConsequence.newLevelSpecificTreasures("El primordial bostezo contagioso. Pierdes el calzado visible", 0,[TreasureKind::SHOES],0)
 monsters << Monster.new("El sopor de Dunwich",2,prize,badConsequence)
 
 #Ángeles de la noche ibicenca
@@ -45,17 +35,17 @@ monsters<< Monster.new("Angeles de la noche ibicenca", 14, prize, badConsequence
 
 #El gorron en el umbral
 prize = Prize.new(3,1)
-badConsequence = BadConsequence.newLevelSpecificTreasures("Pierdes todos tus tesoros visibles", 0, 5)
+badConsequence = BadConsequence.newLevelSpecificTreasures("Pierdes todos tus tesoros visibles", 0, 5, 0)
 monsters<< Monster.new("El gorron en el umbral", 10, prize, badConsequence)
 
 #H.P. Munchcraft
 prize = Prize.new(2,1)
-badConsequence = BadConsequence.newLevelSpecificTreasures("Pierdes la armadura visible", 0, [TreasureKind::ARMOR])
+badConsequence = BadConsequence.newLevelSpecificTreasures("Pierdes la armadura visible", 0, [TreasureKind::ARMOR],0)
 monsters << Monster.new("H.P. Munchcraft",6,prize,badConsequence)
 
 #Bichgooth
 prize = Prize.new(1,1)
-badConsequence = BadConsequence.newLevelSpecificTreasures("Sientes bichos bajo la ropa. Descarta la armadura visible", 0, [TreasureKind::ARMOR])
+badConsequence = BadConsequence.newLevelSpecificTreasures("Sientes bichos bajo la ropa. Descarta la armadura visible", 0, [TreasureKind::ARMOR], 0)
 monsters << Monster.new("Bichgooth",2,prize,badConsequence)
 
 #El rey de la rosa
@@ -70,7 +60,7 @@ monsters << Monster.new("La que redacta en las tinieblas",2,prize,badConsequence
 
 #Los hondos
 prize = Prize.new(2,1)
-badConsequence = BadConsequence.newDeath("Estos monstruos resultan bastante superciales y te aburren mortalmente. Estas muerto")
+badConsequence = BadConsequence.newDeath("Estos monstruos resultan bastante superficiales y te aburren mortalmente. Estas muerto")
 monsters << Monster.new("Los hondos",8,prize,badConsequence)
 
 #Semillas Cthulhu
@@ -80,7 +70,7 @@ monsters << Monster.new("Semillas Cthulhu",4,prize,badConsequence)
 
 #Dameargo
 prize = Prize.new(2,1)
-badConsequence = BadConsequence.newLevelSpecificTreasures("Te intentas escaquear. Pierdes una mano visible.", 0, [TreasureKind::ONEHAND])
+badConsequence = BadConsequence.newLevelSpecificTreasures("Te intentas escaquear. Pierdes una mano visible.", 0, [TreasureKind::ONEHAND],0)
 monsters << Monster.new("Dameargo",1,prize,badConsequence)
 
 #Pollipolipo volante
@@ -105,7 +95,7 @@ monsters << Monster.new("Roboggoth",8,prize,badConsequence)
 
 #El espia
 prize = Prize.new(1,1)
-badConsequence = BadConsequence.newLevelSpecificTreasures("Te asusta en la noche. Pierdes un casco visible.", 0, [TreasureKind::HELMET])
+badConsequence = BadConsequence.newLevelSpecificTreasures("Te asusta en la noche. Pierdes un casco visible.", 0, [TreasureKind::HELMET],0)
 monsters << Monster.new("El espia",5,prize,badConsequence)
 
 #El Lenguas
@@ -152,21 +142,24 @@ end
 puts "Su mal rollo supone la perdida de tesoros 'ARMOR', tanto visibles como ocultos: \n\n"
 
 for iterador in monsters
-  primero = TreasureKind
-  segundo = TreasureKind
-  auxVisibles = iterador.malRollo.specificVisibleTreasures
-  auxOcultos = iterador.malRollo.specificHiddenTreasures
+  specificVisible = iterador.malRollo.specificVisibleTreasures
+  specificHidden = iterador.malRollo.specificHiddenTreasures
+  existe = false
   
-  for primero in auxVisibles
-    if("ARMOR".equal?(primero.to_s)) then
-        puts iterador.to_s
-        puts "\n"
+  for primero in specificVisible
+    if primero == :onehand
+      existe = true
     end
   end
-  for segundo in auxOcultos
-    if ("ARMOR".equal?(segundo.to_s)) then
-        puts iterador.to_s
-        puts "\n"
+  for segundo in specificHidden
+    if segundo == :onehand
+      existe = true
     end
+  end
+  
+  if existe
+    puts iterador
   end
 end
+
+
