@@ -76,7 +76,7 @@ monsters << Monster.new("Dameargo",1,prize,badConsequence)
 #Pollipolipo volante
 prize = Prize.new(1,1)
 badConsequence = BadConsequence.newLevelNumberOfTreasures("Da mucho asquito. Pierdes 3 niveles.",3 , 0, 0)
-monsters << Monster.new("Pollip olipo volate",3,prize,badConsequence)
+monsters << Monster.new("Pollipolipo volate",3,prize,badConsequence)
 
 #Yskhtihyssg-Goth
 prize = Prize.new(3,1)
@@ -90,7 +90,7 @@ monsters << Monster.new("Familia feliz",1,prize,badConsequence)
 
 #Roboggoth
 prize = Prize.new(2,1)
-badConsequence = BadConsequence.newLevelNumberOfTreasures("La quinta directiva primaria te obliga a perder 2 niveles y un tesoro 2 manos visible", 2, 2, 0)
+badConsequence = BadConsequence.newLevelSpecificTreasures("La quinta directiva primaria te obliga a perder 2 niveles y un tesoro 2 manos visible", 2, [TreasureKind::BOTHHANDS], [])
 monsters << Monster.new("Roboggoth",8,prize,badConsequence)
 
 #El espia
@@ -105,7 +105,7 @@ monsters << Monster.new("El lenguas",20,prize,badConsequence)
 
 #Bicefalo
 prize = Prize.new(1,1)
-badConsequence = BadConsequence.newLevelNumberOfTreasures("Te faltan manos para tanta cabeza. Pierdes 3 niveles y tus tesoros visibles de las manos.", 3,5, 0)
+badConsequence = BadConsequence.newLevelSpecificTreasures("Te faltan manos para tanta cabeza. Pierdes 3 niveles y tus tesoros visibles de las manos.", 3,[TreasureKind::BOTHHANDS,TreasureKind::ONEHAND], [])
 monsters << Monster.new("Bicefalo",20,prize,badConsequence)
 
 
@@ -124,7 +124,7 @@ end
 puts "Tienen un mal rollo que implica solo perdida de niveles: \n\n"
 
 for iterador in monsters
-  if (iterador.malRollo.levels > 0) then
+  if ((iterador.malRollo.levels > 0) && (iterador.malRollo.nVisiblesTreasures == 0) && (iterador.malRollo.nHiddenTreasures == 0) && (iterador.malRollo.specificVisibleTreasures == []) && (iterador.malRollo.specificHiddenTreasures == [])) then
      puts iterador.to_s
      puts "\n"
   end
@@ -140,7 +140,7 @@ for iterador in monsters
 end
 
 puts "Su mal rollo supone la perdida de tesoros 'ARMOR', tanto visibles como ocultos: \n\n"
-
+  
   monsters.each do |monstruo|
   specificVisible = monstruo.malRollo.specificVisibleTreasures
   specificHidden = monstruo.malRollo.specificHiddenTreasures
