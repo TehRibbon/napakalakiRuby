@@ -158,16 +158,26 @@ class Player
     
   end
   
+  #Devuelve true si el jugador no ha robado ningún tesoro a su enemigo y false en
+  #caso contrario.
   def canISteal
+    return canISteal    
     
   end
   
+  #Devuelve true si el jugador tiene tesoros para ser robados por otro jugador y false
+  #en caso contrario.
   def canYouGiveMeATreasure
-    
+    canYou = false
+    if(canISteal == true)
+      canYou = true
+    end
+    return canYou
   end
   
+  #Cambia el atributo canISteal a false cuando el jugador roba un tesoro.
   def haveStolen
-    
+    canISteal = false
   end
   
   def discardAllTreasures

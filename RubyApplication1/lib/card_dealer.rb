@@ -16,6 +16,8 @@ class CardDealer
      
     end
     
+    #Inicializa el mazo de cartas de Tesoros (unusedTreasures) con todas las cartas de
+    #tesoros proporcionadas en el documento de cartas de tesoros.
     def initTreasureCardDeck
       
     end
