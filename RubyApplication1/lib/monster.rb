@@ -25,4 +25,18 @@ class Monster
     "Nombre: #{@name} \nNivel de combate: #{@combatLevel} \nMal rollo: #{@malRollo.to_s} \nPremio: #{@premio.to_s}"
   end
   
+  def get_levels_gained
+        
+      @prize.level
+  
+  end
+    
+  def get_treasures_gained
+
+      @prize.treasures
+  
+  end
+  
 end
+
+

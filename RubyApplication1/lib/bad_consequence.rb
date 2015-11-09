@@ -46,3 +46,17 @@ class BadConsequence
 
   
 end
+
+#Devuelve true cuando el mal rollo que tiene que cumplir el jugador está vacio
+
+def is_empty
+      
+        empty = false
+      
+        if @levels == 0 && @death == false && @nHiddenTreasures == 0 && @nVisibleTreasures == 0  && @specificHiddenTreasures.empty && @specificVisibleTreasures.empty then
+        
+            empty = true
+        end
+        
+        return empty
+end
