@@ -5,7 +5,7 @@
 # encoding: utf-8
 
 class BadConsequence
-  attr_accessor :text, :levels, :nVisiblesTreasures, :nHiddenTreasures, :death, :specificHiddenTreasures, :specificVisibleTreasures
+  attr_accessor :text, :levels, :nVisiblesTreasures, :nHiddenTreasures, :death, :specificHiddenTreasures, :specificVisibleTreasures, :MAXTREASURES
   private_class_method :new
   
   def initialize(text, levels, nVisiblesTreasures, nHiddenTreasures, specificVisibleTreasures, specificHiddenTreasures, death)
@@ -16,6 +16,7 @@ class BadConsequence
     @specificHiddenTreasures = specificHiddenTreasures
     @specificVisibleTreasures = specificVisibleTreasures
     @death = death
+    @MAXTREASURES = 10
   end
   
   
@@ -30,6 +31,46 @@ class BadConsequence
   
   def BadConsequence.newDeath(aText)
     new(aText, 0, 0 ,0, Array.new, Array.new, true)
+    
+  end
+  
+  def getMAXTREASURES
+    return MAXTREASURES
+  end
+  
+  def isEmpty
+    
+  end
+  
+  def getLevels
+    return levels
+  end
+  
+  def getNVisiblesTreasures
+    return nVisiblesTreasures
+  end
+  
+  def getNHiddenTreasures
+    return nHiddenTreasures
+  end
+  
+  def getSpecificVisibleTreasures
+    return specificVisibleTreasures
+  end
+  
+  def getSpecificHiddenTreasures
+    return speficicHiddenTreasures
+  end
+  
+  def substractVisibleTreasure(treasure)
+    
+  end
+  
+  def substractHiddenTreasure(treasure)
+    
+  end
+  
+  def adjustToFitTreasureLists(v,h) #tanto v como h son vectores de tipo Treasure(cambiar nombre de la variable al implementar)
     
   end
   
@@ -53,7 +94,7 @@ def is_empty
       
         empty = false
       
-        if @levels == 0 && @death == false && @nHiddenTreasures == 0 && @nVisibleTreasures == 0  && @specificHiddenTreasures.empty && @specificVisibleTreasures.empty then
+        if (@levels == 0 && @death == false && @nHiddenTreasures == 0 && @nVisibleTreasures == 0  && @specificHiddenTreasures.empty && @specificVisibleTreasures.empty) then
         
             empty = true
         end

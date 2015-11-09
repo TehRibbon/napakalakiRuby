@@ -21,20 +21,22 @@ class Monster
   end
   
   
-  def to_s
-    "Nombre: #{@name} \nNivel de combate: #{@combatLevel} \nMal rollo: #{@malRollo.to_s} \nPremio: #{@premio.to_s}"
-  end
   
+  #Devuelve el número de niveles ganados proporcionados por su buen rollo.
   def get_levels_gained
         
-      @prize.level
-  
+      @premio.level
   end
     
+  #Devuelve el número de tesoros ganados proporcionados por su buen rollo.
   def get_treasures_gained
 
-      @prize.treasures
+      @premio.treasures
   
+  end
+  
+  def to_s
+    "Nombre: #{@name} \nNivel de combate: #{@combatLevel} \nMal rollo: #{@malRollo.to_s} \nPremio: #{@premio.to_s}"
   end
   
 end
