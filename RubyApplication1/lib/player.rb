@@ -8,7 +8,7 @@ class Player
   
   #Atributos
   attr_accessor :MAXLEVEL, :name, :level, :dead, :canISteal, :hiddenTreasures, :visibleTreasures, :enemy, :pendingBadConsequence
-  @MAXLEVEL = 10
+  @@MAXLEVEL = 10
   
   #Constructor
   def initialize(name)

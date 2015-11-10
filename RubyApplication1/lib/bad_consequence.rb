@@ -39,7 +39,13 @@ class BadConsequence
   end
   
   def isEmpty
+    empty = false
     
+    if(text.empty? && death == false && levels == 0 && nVisiblesTreasures == 0 && nHiddenTreasures == 0 && specificVisibleTreasures.empty? && specificHiddenTreasures.empty?) then
+      empty = true
+    end
+    
+    return empty
   end
   
   def getLevels
