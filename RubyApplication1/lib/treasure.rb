@@ -2,6 +2,8 @@
 # To change this template file, choose Tools | Templates
 # and open the template in the editor.
 
+
+module Napakalaki
 require_relative "treasure_kind"
 
 class Treasure
@@ -28,4 +30,5 @@ class Treasure
     return type
   end
   
+end
 end

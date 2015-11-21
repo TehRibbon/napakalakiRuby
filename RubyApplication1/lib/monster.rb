@@ -3,7 +3,7 @@
 # and open the template in the editor.
 #!/bin/env ruby
 # encoding: utf-8
-
+module Napakalaki
 require_relative 'bad_consequence.rb'
 require_relative 'prize.rb'
 
@@ -39,6 +39,7 @@ class Monster
     "Nombre: #{@name} \nNivel de combate: #{@combatLevel} \nMal rollo: #{@malRollo.to_s} \nPremio: #{@premio.to_s}"
   end
   
+end
 end
 
 

@@ -1,6 +1,8 @@
 # To change this license header, choose License Headers in Project Properties.
 # To change this template file, choose Tools | Templates
 # and open the template in the editor.
+
+module Napakalaki
 require_relative "treasure"
 require_relative "dice"
 require_relative "player"
@@ -149,6 +151,9 @@ class Player
     
   end
   
+  def getEnemy()
+    return @enemy
+  end
   #Asigna valor al atributo que referencia al enemigo del jugador.
   def setEnemy(enemy)
     @enemy = enemy
@@ -184,4 +189,5 @@ class Player
     
   end
 
+end
 end
