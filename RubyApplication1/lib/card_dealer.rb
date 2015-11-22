@@ -175,11 +175,72 @@ class CardDealer
     end
     
     def NextTreasure
-      
+    
+      #Comprobamos si tenemos cartas en el mazo
+      if @unusedTreasures.empty?
+            
+        #Recorremos las cartas descartadas
+        @usedTreasures.each do |t| 
+                
+          #Las agregamos al mazo sin usar
+          @unusedTreasures << t
+        
+        end
+            
+        #Las barajamos
+        shuffleTreasures
+            
+        #Limpiamos el mazo de descartes
+        @usedTreasures.clear
+        
+      end
+        
+      #Obtengo la primera carta del mazo
+      t = @unusedTreasures.at(0)
+        
+      #La agregamos al mazo de descartes
+      @usedTreasures << t
+        
+      #La eliminamos del mazo
+      @unusedTreasures.delete(t);
+        
+      #Devolvemos la carta
+      return t
+        
     end
     
     def NextMonster
       
+      #Comprobamos si tenemos cartas en el mazo
+      if @unusedMonsters.empty?
+            
+        #Recorremos las cartas descartadas
+        @usedMonsters.each do |m| 
+                
+          #Las agregamos al mazo sin usar
+          @unusedMonsters << m
+        
+        end
+            
+        #Las barajamos
+        shuffleMonsters
+            
+        #Limpiamos el mazo de descartes
+        @usedTreasures.clear
+        
+      end
+        
+      #Obtengo la primera carta del mazo
+      m = @unusedMonsters.at(0)
+        
+      #La agregamos al mazo de descartes
+      @usedMonsters << m
+        
+      #La eliminamos del mazo
+      @unusedMonsters.delete(m);
+        
+      #Devolvemos la carta
+      return m
     end
     
     #Introduce en el mazo de descartes de tesoros (usedTreasures) el tesoro t.
