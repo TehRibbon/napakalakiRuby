@@ -68,12 +68,16 @@ class BadConsequence
     return speficicHiddenTreasures
   end
   
+  #Actualiza el mal rollo para que el tesoro visible t no forme parte del mismo. Es posible que
+  #esta actualización no implique cambio alguno, que lleve a eliminar un tipo específico de
+  #tesoro visible, o a reducir el número de tesoros visibles pendientes.
   def substractVisibleTreasure(treasure)
-    
+    specificVisibleTreasure.remove.getType(treasure)
   end
   
+  #Igual que el anterior, pero para los ocultos.
   def substractHiddenTreasure(treasure)
-    
+    specificHiddenTreasure.remove.getType(treasure)
   end
   
   def adjustToFitTreasureLists(v,h) #tanto v como h son vectores de tipo Treasure(cambiar nombre de la variable al implementar)

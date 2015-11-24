@@ -70,9 +70,44 @@ class Player
     
   end
   
+  #Comprueba si el tesoro t se puede pasar de oculto a visible según las reglas del juego.
   def canMakeTreasureVisible(treasure)
+    resultado = false;
     
-  end
+    case treasure.type
+      
+    when ONEHAND
+       if(treasure == BOTHHANDS) then
+         resultado = false
+       else
+         i = 0
+         @visibleTreasures.each do |tesoros|
+           if(tesoros.getType == ONEHAND) then
+             i += 1
+           end
+         end
+       
+         
+        if(i == 2) then
+          resultado = false;
+        else
+          resultado = true
+        end
+       end
+     
+    
+    else
+     if(visibleTreasures.isEmpty && hiddenTreasures.isEmpty)
+       resultado = true
+     else
+       resultado = fasle
+     end
+    end
+    return resultado
+                  
+    
+    end
+  
   
   #Devuelve el número de tesoros visibles de tipo tKind que tiene el jugador.
   def howManyVisibleTreasures(tKind)
@@ -159,7 +194,13 @@ class Player
     @enemy = enemy
   end
   
+  #Devuelve un tesoro elegido al azar de entre los tesoros ocultos del jugador.
   def giveMeATreasure
+    
+    numero = Random.rand.next(HiddenTreasures.length + 1)
+    tesoro = HiddenTreasures.get(numero)
+    return tesoro    
+    
     
   end
   
@@ -189,5 +230,5 @@ class Player
     
   end
 
-end
+ end
 end
