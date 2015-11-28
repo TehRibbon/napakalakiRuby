@@ -25,6 +25,7 @@ require "singleton"
     #elementos haya en names, que es el array de String que contiene el nombre de los
     #jugadores.
     def initPlayers(names)
+      @dealer = CardDealer.instance #inicializo dealer
       @players = Array.new
 
       #creamos tantos jugadores como nombres 
@@ -71,20 +72,29 @@ require "singleton"
       #para poder terminar su turno. Devuelve false si el jugador activo no puede pasar de turno y
       #true en caso contrario, para ello usa el método de Player validState() donde se realizan las
       #comprobaciones pertinentes.
-    def nextTurnIsAllowed
-      return @currentPlayer.validState()
+    def nextTurnAllowed
+      if (@currentPlayer == nil) then
+        allowed = true #la primera vez currentPlayer está sin asignar
+      else
+        allowed = @currentPlayer.validState()
+      end
+      
+      return allowed
     end
 
     #Se asigna un enemigo a cada jugador. Esta asignación se hace de forma aleatoria teniendo
     #en cuenta que un jugador no puede ser enemigo de sí mismo.
     def setEnemies
+      posAleatoria = 0
       tamanio = @players.length
       @players.each do |enemigo|
-        posAleatoria = @players.sample(tamanio)
+        posAleatoria = Random.rand(1 ..tamanio)
+        
         while(@players.at(posAleatoria) == enemigo)
-          posAleatoria = @players.sample(tamanio)
+          posAleatoria = Random.rand(1 ..tamanio)
+          
         end
-        enemigo.setEnemy(@players.get(posAleatoria))
+        enemigo.setEnemy(@players.at(posAleatoria))
         end
     end
     
@@ -134,10 +144,12 @@ require "singleton"
     #jugador su enemigo y de iniciar el juego con la llamada a nextTurn() para pasar al siguiente
     #turno (que en este caso será el primero).
     def initGame(players)
+      
       initPlayers(players)
       setEnemies()
-      nextTurn()
       dealer.initCards()
+      nextTurn()
+      
 
     end
 
@@ -163,9 +175,8 @@ require "singleton"
     #initTreasures.
     def nextTurn
       stateOk = nextTurnAllowed()
-      stateOk = @currentPlayer.validState()
       
-      if(stateOk)
+      if(stateOk) then
         @currentMonster = @dealer.nextMonster()
         @currentPlayer = nextPlayer()
         @dead = isDead()

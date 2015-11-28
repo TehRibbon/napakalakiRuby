@@ -215,12 +215,8 @@ class Player
   #más de 4 tesoros ocultos, y false en caso contrario. Para comprobar que el jugador
   #no tenga mal rollo que cumplir, utiliza el método isEmpty de la clase
   #BadConsequence.
-  def validState
-    resultado = false
-    if(pendingBadConsequence.isEmpty && hiddenTreasures <= 4 ) then
-      resultado = true
-    end
-    return resultado
+  def validState()
+    return ( (@badConsequence != nil) && (@hiddenTreasures <= 4) )
   end
   
   def initTreasures
