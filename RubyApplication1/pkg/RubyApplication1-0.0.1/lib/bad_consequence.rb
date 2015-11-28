@@ -3,9 +3,9 @@
 # and open the template in the editor.
 #!/bin/env ruby
 # encoding: utf-8
-
+module Napakalaki
 class BadConsequence
-  attr_accessor :text, :levels, :nVisiblesTreasures, :nHiddenTreasures, :death, :specificHiddenTreasures, :specificVisibleTreasures
+  attr_accessor :text, :levels, :nVisiblesTreasures, :nHiddenTreasures, :death, :specificHiddenTreasures, :specificVisibleTreasures, :MAXTREASURES
   private_class_method :new
   
   def initialize(text, levels, nVisiblesTreasures, nHiddenTreasures, specificVisibleTreasures, specificHiddenTreasures, death)
@@ -16,6 +16,7 @@ class BadConsequence
     @specificHiddenTreasures = specificHiddenTreasures
     @specificVisibleTreasures = specificVisibleTreasures
     @death = death
+    @MAXTREASURES = 10
   end
   
   
@@ -33,6 +34,75 @@ class BadConsequence
     
   end
   
+  def getMAXTREASURES
+    return MAXTREASURES
+  end
+  
+  #Devuelve true cuando el mal rollo que tiene que cumplir el jugador está vacío, eso
+  #significa que el conjunto de atributos del mal rollo indican que no hay mal rollo que
+  #cumplir. Plantéate qué valores deberán tener.
+  def isEmpty
+    empty = false
+    
+    if(text.empty? && death == false && levels == 0 && nVisiblesTreasures == 0 && nHiddenTreasures == 0 && specificVisibleTreasures.empty? && specificHiddenTreasures.empty?) then
+      empty = true
+    end
+    
+    return empty
+  end
+  
+  def getLevels
+    return levels
+  end
+  
+  def getNVisiblesTreasures
+    return nVisiblesTreasures
+  end
+  
+  def getNHiddenTreasures
+    return nHiddenTreasures
+  end
+  
+  def getSpecificVisibleTreasures
+    return specificVisibleTreasures
+  end
+  
+  def getSpecificHiddenTreasures
+    return speficicHiddenTreasures
+  end
+  
+  #Actualiza el mal rollo para que el tesoro visible t no forme parte del mismo. Es posible que
+  #esta actualización no implique cambio alguno, que lleve a eliminar un tipo específico de
+  #tesoro visible, o a reducir el número de tesoros visibles pendientes.
+  def substractVisibleTreasure(treasure)
+    specificVisibleTreasure.remove.getType(treasure)
+  end
+  
+  #Igual que el anterior, pero para los ocultos.
+  def substractHiddenTreasure(treasure)
+    specificHiddenTreasure.remove.getType(treasure)
+  end
+  
+  def adjustToFitTreasureLists(v,h) #tanto v como h son vectores de tipo Treasure(cambiar nombre de la variable al implementar)
+    tVisible = Array.new
+    tHidden = Array.new
+    
+    v.each do |t|
+      if(tVisible.index(t.type) == nil) then
+        tVisible << t.type
+      end
+    end
+    
+    h.each do |t|
+      if(tHidden.index(t.type) == nil) then
+        tHidden << t.type
+      end
+    end
+    
+    bs = BadConsequence.newLevelSpecificTreasures(@text, 0, tVisible, tHidden)
+    return bs
+  
+  end
   def to_s
     
     "\n    #{@text} 
@@ -45,4 +115,20 @@ class BadConsequence
   end
 
   
+end
+
+#Devuelve true cuando el mal rollo que tiene que cumplir el jugador está vacio
+
+def is_empty
+      
+        empty = false
+      
+        if (@levels == 0 && @death == false && @nHiddenTreasures == 0 && @nVisibleTreasures == 0  && @specificHiddenTreasures.empty && @specificVisibleTreasures.empty) then
+        
+            empty = true
+        end
+        
+        return empty
+end
+
 end

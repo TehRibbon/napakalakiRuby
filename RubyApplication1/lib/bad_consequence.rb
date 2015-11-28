@@ -38,6 +38,9 @@ class BadConsequence
     return MAXTREASURES
   end
   
+  #Devuelve true cuando el mal rollo que tiene que cumplir el jugador está vacío, eso
+  #significa que el conjunto de atributos del mal rollo indican que no hay mal rollo que
+  #cumplir. Plantéate qué valores deberán tener.
   def isEmpty
     empty = false
     
@@ -81,9 +84,25 @@ class BadConsequence
   end
   
   def adjustToFitTreasureLists(v,h) #tanto v como h son vectores de tipo Treasure(cambiar nombre de la variable al implementar)
+    tVisible = Array.new
+    tHidden = Array.new
     
-  end
+    v.each do |t|
+      if(tVisible.index(t.type) == nil) then
+        tVisible << t.type
+      end
+    end
+    
+    h.each do |t|
+      if(tHidden.index(t.type) == nil) then
+        tHidden << t.type
+      end
+    end
+    
+    bs = BadConsequence.newLevelSpecificTreasures(@text, 0, tVisible, tHidden)
+    return bs
   
+  end
   def to_s
     
     "\n    #{@text} 

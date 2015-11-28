@@ -3,7 +3,7 @@
 # and open the template in the editor.
 #!/bin/env ruby
 # encoding: utf-8
-
+module Napakalaki
 require_relative 'bad_consequence.rb'
 require_relative 'prize.rb'
 
@@ -21,8 +21,25 @@ class Monster
   end
   
   
+  
+  #Devuelve el número de niveles ganados proporcionados por su buen rollo.
+  def getLevelesGained
+        
+      @premio.level
+  end
+    
+  #Devuelve el número de tesoros ganados proporcionados por su buen rollo.
+  def getTreasuresGained
+
+      @premio.treasures
+  
+  end
+  
   def to_s
-    "Nombre: #{@name} \nNivel de combate: #{@combatLevel} \nMal rollo: #{malRollo.to_s} \nPremio: #{@premio.to_s}"
+    "Nombre: #{@name} \nNivel de combate: #{@combatLevel} \nMal rollo: #{@malRollo.to_s} \nPremio: #{@premio.to_s}"
   end
   
 end
+end
+
+
