@@ -21,12 +21,12 @@ class Player
   
   #Devuelve el nombre del jugador.
   def getname()
-    return name
+    return @name
   end
   
   #Devuelve la vida al jugador, modificando el atributo correspondiente.
   def bringToLife()
-    dead=false
+    @dead=false
   end
   
   #Devuelve el nivel de combate del jugador, que viene dado por su nivel más los
@@ -34,10 +34,10 @@ class Player
   #juego.
   def getCombatLevel()
     @visibleTreasures.each do |t|
-      level += t.getBonus()
+      @level += t.getBonus()
     end
     @hiddenTreasures.each do |t|
-      level += t.getBonus()
+      @level += t.getBonus()
     end
     
     return level
@@ -45,14 +45,14 @@ class Player
   
   #Incrementa el nivel del jugador en i niveles, teniendo en cuenta las reglas del juego.
   def incrementLevel()
-    ++level
+    @level = level + 1
   end
   
   def decrementLevel()
     if(level < 1) then
-      level = 1
+      @level = 1
     else
-      --level
+      @level = level - 1
     end
   end
   
