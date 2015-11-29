@@ -32,6 +32,8 @@ require "singleton"
       names.each do |nombre_jugador|
         players << Player.new(nombre_jugador)
       end
+      nextPlayer()
+      
     end
 
     #Decide qué jugador es el siguiente en jugar.
@@ -50,20 +52,21 @@ require "singleton"
 
       #indice_siguiente
       total_jugadores = @players.length
-
-      if(@players == nil) then
+      
+      if(@currentPlayer == nil) then
         indice_siguiente = rand(total_jugadores)
       else
         indice_jugador_actual = @players.index(@currentPlayer)
-        if(indice_jugador_actual == total_jugadores) then
+        if(indice_jugador_actual == total_jugadores - 1) then
           indice_siguiente= 0
         else 
           indice_siguiente = indice_jugador_actual + 1
         end
       end
-
-      nextPlayer = @players.at(indice_siguiente)
-      @currentPlayer = nextPlayer
+      
+      
+      siguiente_jugador = @players.at(indice_siguiente)
+      @currentPlayer = siguiente_jugador
 
       return @currentPlayer
     end
@@ -187,6 +190,10 @@ require "singleton"
       else
         @currentMonster = @dealer.nextMonster()
       end
+      
+      if(@currentPlayer = nil)
+        stateOk = true
+      end
 
      return stateOk
     end
@@ -205,6 +212,9 @@ require "singleton"
       
     end
     
+    def to_s
+      "\n #{@name}"
+    end
   end
   
 end

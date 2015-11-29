@@ -14,7 +14,20 @@ class Player
   
   #Constructor
   def initialize(name)
+    @name = name
     
+    @dead = true
+    @level = 1 #inicializamos nivel a 1
+    @visibleTreasures = Array.new
+    @hiddenTreasures = Array.new
+  end
+  
+  def constructor_copia(player)
+    @level = player.level
+    @pendingBadConsequence = player.pendingBadConsequence
+    @dead = player.dead
+    @hiddenTreasures = player.hiddenTreasures
+    @visibleTreasures = player.visibleTreasures
   end
   
   #Metodos
@@ -154,11 +167,11 @@ class Player
   end
     
   def getHiddenTreasures
-    
+    @hiddenTreasures
   end
   
   def getVisibleTreasures
-    
+    return @visibleTreasures
   end
   
   def combat(monster)

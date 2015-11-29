@@ -6,7 +6,7 @@
 module Napakalaki
 require_relative "treasure_kind"
 
-class Treasure
+class Treasure 
  
   #Atributos
   attr_accessor :name, :bonus, :type 

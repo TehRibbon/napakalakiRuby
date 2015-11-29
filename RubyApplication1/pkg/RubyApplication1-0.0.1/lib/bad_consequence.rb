@@ -5,7 +5,9 @@
 # encoding: utf-8
 module Napakalaki
 class BadConsequence
-  attr_accessor :text, :levels, :nVisiblesTreasures, :nHiddenTreasures, :death, :specificHiddenTreasures, :specificVisibleTreasures, :MAXTREASURES
+  attr_accessor :text, :levels, :nVisiblesTreasures, :nHiddenTreasures, :death, :specificHiddenTreasures, :specificVisibleTreasures
+  MAXTREASURES = 10
+  
   private_class_method :new
   
   def initialize(text, levels, nVisiblesTreasures, nHiddenTreasures, specificVisibleTreasures, specificHiddenTreasures, death)
@@ -16,16 +18,18 @@ class BadConsequence
     @specificHiddenTreasures = specificHiddenTreasures
     @specificVisibleTreasures = specificVisibleTreasures
     @death = death
-    @MAXTREASURES = 10
+    
   end
   
   
   def BadConsequence.newLevelNumberOfTreasures(aText, someLevels, someVisibleTreasures, someHiddenTreasures)
     new(aText, someLevels, someVisibleTreasures, someHiddenTreasures, Array.new, Array.new ,false)
+    
   end   
     
   def BadConsequence.newLevelSpecificTreasures(aText, someLevels, someSpecificVisibleTreasures, someSpecificHiddenTreasures)
     new(aText, someLevels,0 ,0 , someSpecificVisibleTreasures, someSpecificHiddenTreasures, false)
+    
     
   end
   
