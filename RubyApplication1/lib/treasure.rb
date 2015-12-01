@@ -4,8 +4,6 @@
 
 
 
-require_relative "treasure_kind"
-module Napakalaki
 class Treasure 
  
   #Atributos
@@ -15,7 +13,7 @@ class Treasure
   def initialize(name, bonus, treasure)
     @name = name
     @bonus = bonus
-    @treasure = treasure
+    @type = treasure
   end
   
   def getName
@@ -36,5 +34,4 @@ class Treasure
     \tTipo: #{@type} "
    
   end
-end
 end

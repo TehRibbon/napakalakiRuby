@@ -1,13 +1,8 @@
 # To change this license header, choose License Headers in Project Properties.
 # To change this template file, choose Tools | Templates
 # and open the template in the editor.
-require_relative "card_dealer"
-require_relative "monster"
-require_relative "player"
-
-
-module Napakalaki
-  
+require_relative "card_dealer.rb"
+require_relative "player.rb" 
 
 require "singleton"
 
@@ -18,7 +13,7 @@ require "singleton"
     attr_accessor :currentMonster, :dealer, :players, :currentPlayer
     #Constructor
     def initialize
-
+      @dealer = CardDealer.instance
     end
 
     #Metodos
@@ -27,18 +22,17 @@ require "singleton"
     #elementos haya en names, que es el array de String que contiene el nombre de los
     #jugadores.
     def initPlayers(names)
-      @dealer = CardDealer::CardDealer.instance #inicializo dealer
+      #@dealer = CardDealer.instance
       @players = Array.new
 
       #creamos tantos jugadores como nombres 
       names.each do |nombre_jugador|
-        players << Player.new(nombre_jugador)
-      end
-      @currentPlayer = nextPlayer
-      
+        player = Player.new(nombre_jugador)
+        @players << player
+      end     
       
     end
-
+    private :initPlayers
     #Decide qué jugador es el siguiente en jugar.
     #En primer lugar, se calcula el índice que ocupa el siguiente jugador en la lista de jugadores.
     #Se pueden dar dos posibilidades:
@@ -52,44 +46,50 @@ require "singleton"
     #Una vez calculado el índice, se devuelve el jugador que ocupa esa posición.
     def nextPlayer
 
+      aux = 0
+      posicion = 0
+      contador = 0
       
-      
-      total_jugadores = @players.length
-      
-      if(@currentPlayer == nil) then
-        posicion = rand(total_jugadores - 1)
-        aux = players.at(posicion)
+      if(@currentPlayer.nil? ) then
+        numeroJugadores = @players.length - 1
+        posicion = Random.rand(0..numeroJugadores)
+        aux = @players.at(posicion)
         @currentPlayer = aux
         
       else
        
-        posicion = players.index(@currentPlayer)
-        posicion = posicion + 1
-        if(posicion >= total_jugadores)
-          #Seleccionamos el primero
-          aux = players.at(0)
-          @currentPlayer = aux
+        @players.each do |iterador|
+          contador = contador + 1
+          if(@currentPlayer == iterador)
+            posicion = contador
+          end
+        end
+        
+        if (posicion >= @players.length)
+          @currentPlayer = @players.at(0)
         else
-          aux = players.at(posicion)
-          @currentPlayer = aux
-        end  
+          @currentPlayer = @players.at(posicion)
       end
-
+      end
       return @currentPlayer
     end
+    private :nextPlayer
 
       #Método que comprueba si el jugador activo (currentPlayer) cumple con las reglas del juego
       #para poder terminar su turno. Devuelve false si el jugador activo no puede pasar de turno y
       #true en caso contrario, para ello usa el método de Player validState() donde se realizan las
       #comprobaciones pertinentes.
     def nextTurnAllowed
-      solucion = true
-      if (@currentPlayer != nil) then
+      solucion = false
+      if (@currentPlayer.nil?) then
+        solucion = true
+      else
         solucion = @currentPlayer.validState() #la primera vez currentPlayer está sin asignar
       end
       
       return solucion
     end
+    private :nextTurnAllowed
 
     #Se asigna un enemigo a cada jugador. Esta asignación se hace de forma aleatoria teniendo
     #en cuenta que un jugador no puede ser enemigo de sí mismo.
@@ -97,16 +97,16 @@ require "singleton"
       posAleatoria = 0
       tamanio = @players.length
       @players.each do |enemigo|
-        posAleatoria = Random.rand(1 ..tamanio)
+        posAleatoria = Random.rand(0 ..tamanio)
         
         while(@players.at(posAleatoria) == enemigo)
-          posAleatoria = Random.rand(1 ..tamanio)
+          posAleatoria = Random.rand(0 ..tamanio)
           
         end
         enemigo.setEnemy(@players.at(posAleatoria))
         end
     end
-    
+    private :setEnemies
 
     def getInstance
       instance = Napakalaki.instance
@@ -155,9 +155,10 @@ require "singleton"
     def initGame(players)
       
       initPlayers(players)
-      dealer.initCards()
-      nextTurn()
       setEnemies()
+      @dealer.initCards()
+      nextTurn()
+      
 
 
     end
@@ -216,4 +217,4 @@ require "singleton"
       "\n #{@name}"
     end
   end
-end
+

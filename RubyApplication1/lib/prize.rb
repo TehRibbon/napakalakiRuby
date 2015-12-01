@@ -4,7 +4,6 @@
 #!/bin/env ruby
 # encoding: utf-8
 
-module Napakalaki
 class Prize
   attr_accessor :treasures
   attr_accessor :level
@@ -19,5 +18,4 @@ class Prize
      Niveles ganados: #{@level}"
   end
  
-end
 end

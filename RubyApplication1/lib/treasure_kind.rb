@@ -4,7 +4,6 @@
 #!/bin/env ruby
 # encoding: utf-8
 
-module Napakalaki
 module TreasureKind
     
   ARMOR = :ARMOR
@@ -12,5 +11,4 @@ module TreasureKind
   BOTHHANDS = :BOTHHANDS
   HELMET = :HELMET
   SHOES = :SHOES
-end
 end

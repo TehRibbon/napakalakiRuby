@@ -5,7 +5,7 @@
 require_relative "napakalaki"
 require_relative "GameTester"
 
-module Napakalaki
+module NapakalakiGame
 
   class EjemploMain
    

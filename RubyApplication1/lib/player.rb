@@ -3,13 +3,13 @@
 # and open the template in the editor.
 
 
-require_relative "treasure"
-require_relative "dice"
-require_relative "player"
-require_relative "combat_result"
-require_relative "napakalaki"
+require_relative 'treasure'
+require_relative 'dice.rb'
+require_relative 'combat_result.rb'
+require_relative 'napakalaki.rb'
+require_relative 'bad_consequence.rb'
 
-module Napakalaki
+
 
 class Player
   
@@ -63,8 +63,12 @@ class Player
   end
   
   #Incrementa el nivel del jugador en i niveles, teniendo en cuenta las reglas del juego.
-  def incrementLevel()
-    @level = level + 1
+  def incrementLevels()
+    if(@level + 1 >= @@MAXLEVEL)
+      @level = @@MAXLEVEL
+    else
+      @level = @level + i
+    end
   end
   
   def decrementLevels(level)
@@ -82,19 +86,17 @@ class Player
   end
   
   def applyPrize(monster)
-    nLevels = monster.getLevelsGained()
-    incrementLevels(nLevels)
+    incrementLevels(monster.getLevelsGained())
     nTreasures = monster.getTreasuresGained()
     
-    if(nTreasures > 0)
-       dealer = CardDealer.instance
-       nTreasures.each do |treasure|
-          t = dealer.nextTreasure() 
-          @hiddenTreasures << t
-         
-       end
+    deck = CardDealer.getInstance()
+    
+    for i in 0..nTreasures-1
+      @hiddenTreasures << deck.nextTreasure()
     end
   end
+  
+  private :applyPrize
   
   def applyBadConsequence(monster)
     badConsequence = monster.getBadConsequence()
@@ -109,15 +111,15 @@ class Player
   def canMakeTreasureVisible(treasure)
     resultado = false;
     
-    case treasure.type
+    case treasure.getType
       
-    when ONEHAND
-       if(treasure == BOTHHANDS) then
+    when TreasureKind::ONEHAND
+       if(isTreasureKindInUse(TreasureKind::BOTHHANDS)) then
          resultado = false
        else
          i = 0
          @visibleTreasures.each do |tesoros|
-           if(tesoros.getType == ONEHAND) then
+           if(tesoros.getType == TreasureKind::ONEHAND) then
              i += 1
            end
          end
@@ -132,16 +134,14 @@ class Player
      
     
     else
-     if(visibleTreasures.isEmpty && hiddenTreasures.isEmpty)
-       resultado = true
-     else
-       resultado = fasle
-     end
+        resultado = !isTreasureKindInUse(treasure.getType())
+     
     end
-    return resultado
+       return resultado
                   
     
     end
+    private :canMakeTreasureVisible
   
   
   #Devuelve el número de tesoros visibles de tipo tKind que tiene el jugador.
@@ -183,7 +183,7 @@ class Player
     if(myLevel > monsterLevel)
       applyPrize(monster)
       if(@level >= @@MAXLEVEL)
-        combateResult = NapakalakiGame::CombatResult::WINGAME  
+        combatResult = NapakalakiGame::CombatResult::WINGAME  
       else
         combatResult = NapakalakiGame::CombatResult::WIN
       end
@@ -231,7 +231,7 @@ class Player
   #BadConsequence.
   def validState()
       resultado = true;
-      if( (!@pendingBadConsequence.isEmpty ) || (@hiddenTreasures.length > 4) )
+      if( (!@pendingBadConsequence.isEmpty ) or (@hiddenTreasures.length > 4) )
             resultado = false;
       end
       return resultado
@@ -239,8 +239,8 @@ class Player
   end
   
   def initTreasures
-    dealer = CardDealer::CardDealer.instance
-    dice = Dice::Dice.instance
+    dealer = CardDealer.instance
+    dice = Dice.instance
     
     bringToLife()
     treasure = dealer.nextTreasure()
@@ -258,6 +258,16 @@ class Player
     end
   end
   
+  def isTreasureKindInUse(tipo)
+    resultado = false
+    @visibleTreasures.each do |treasure|
+      if(tipo == treasure.getType()) then
+        resultado = true
+        break
+      end
+    end
+    return resultado
+  end
   #Devuelve el nivel del jugador
   def getLevels
     return level
@@ -301,7 +311,7 @@ class Player
   #caso contrario.
   def canISteal
     return canISteal    
-    
+
   end
   
   #Devuelve true si el jugador tiene tesoros para ser robados por otro jugador y false
@@ -334,4 +344,3 @@ class Player
   end
 
  end
-end

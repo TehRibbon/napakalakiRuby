@@ -3,7 +3,7 @@
 # and open the template in the editor.
 #!/bin/env ruby
 # encoding: utf-8
-module Napakalaki
+
 class BadConsequence
   attr_accessor :text, :levels, :nVisiblesTreasures, :nHiddenTreasures, :death, :specificHiddenTreasures, :specificVisibleTreasures
   MAXTREASURES = 10
@@ -156,5 +156,4 @@ def is_empty
         end
         
         return empty
-end
 end
