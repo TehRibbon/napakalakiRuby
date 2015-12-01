@@ -87,7 +87,29 @@ class BadConsequence
     specificHiddenTreasure.remove.getType(treasure)
   end
   
-  def adjustToFitTreasureLists(v,h) #tanto v como h son vectores de tipo Treasure(cambiar nombre de la variable al implementar)
+  def adjustToFitTreasureList(v,h) #tanto v como h son vectores de tipo Treasure(cambiar nombre de la variable al implementar)
+    
+    if(specificHiddenTreasures.empty? && specificVisibleTreasures.empty?)
+      visibles = 0
+      ocultos = 0
+      tamV = v.lenght
+      tamO = h.lenght
+      
+      if(nVisiblesTreasures <= tamV)
+        visibles = nVisiblesTreasures
+      elsif (tamV < nVisiblesTreasures)
+        visibles = tamV
+      end
+      
+      if(nHiddenTreasures <= tamO)
+        ocultos = nHiddenTreasures
+      elsif(tamO < nHiddenTreasures)
+        ocultos = tamO
+      end
+      
+      
+    else
+    
     tVisible = Array.new
     tHidden = Array.new
     
@@ -103,7 +125,8 @@ class BadConsequence
       end
     end
     
-    bs = BadConsequence.newLevelSpecificTreasures(@text, 0, tVisible, tHidden)
+    bs = BadConsequence.newLevelSpecificTreasures("", 0, tVisible, tHidden)
+  end
     return bs
   
   end
@@ -134,5 +157,4 @@ def is_empty
         
         return empty
 end
-
 end

@@ -1,7 +1,9 @@
 # To change this license header, choose License Headers in Project Properties.
 # To change this template file, choose Tools | Templates
 # and open the template in the editor.
+
 module Napakalaki
+module CardDealer
 require "singleton"
 #require_relative "treasure"
 #require_relative "monster"
@@ -175,7 +177,7 @@ class CardDealer
       instance = CardDealer.instance
     end
     
-    def NextTreasure
+    def nextTreasure
     
       #Comprobamos si tenemos cartas en el mazo
       if @unusedTreasures.empty?
@@ -197,16 +199,16 @@ class CardDealer
       end
         
       #Obtengo la primera carta del mazo
-      t = @unusedTreasures.at(0)
+      siguiente_tesoro = @unusedTreasures.at(0)
         
       #La agregamos al mazo de descartes
-      @usedTreasures << t
+      @usedTreasures << siguiente_tesoro
         
       #La eliminamos del mazo
-      @unusedTreasures.delete(t);
+      @unusedTreasures.delete(siguiente_tesoro);
         
       #Devolvemos la carta
-      return t
+      return siguiente_tesoro
         
     end
     
@@ -250,7 +252,7 @@ class CardDealer
     end
     
     def giveMonsterBack(monster)
-      @usedMonster << monster #inicializado en initMonster
+      @usedMonsters << monster #inicializado en initMonster
     end
     
     def initCards
@@ -265,4 +267,5 @@ class CardDealer
   
 end
 
+end
 end

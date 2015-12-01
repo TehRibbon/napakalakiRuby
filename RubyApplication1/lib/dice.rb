@@ -2,6 +2,7 @@
 # To change this template file, choose Tools | Templates
 # and open the template in the editor.
 module Napakalaki
+module Dice
 require "singleton"
 
 class Dice
@@ -15,9 +16,9 @@ class Dice
       instance = Dice.instance
     end
     #Genera un número aleatorio entre 1 y 6
-    def next_number
+    def nextNumber
        return 1 + rand(6)
     end
 end
-
+end
 end

@@ -3,7 +3,6 @@
 # and open the template in the editor.
 #!/bin/env ruby
 # encoding: utf-8
-module Napakalaki
 require_relative 'prize.rb'
 require_relative 'bad_consequence.rb'
 require_relative 'monster.rb'
@@ -163,4 +162,3 @@ puts "Su mal rollo supone la perdida de tesoros 'ARMOR', tanto visibles como ocu
  end
 
 
-end

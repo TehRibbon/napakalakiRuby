@@ -3,9 +3,9 @@
 # and open the template in the editor.
 
 
-module Napakalaki
-require_relative "treasure_kind"
 
+require_relative "treasure_kind"
+module Napakalaki
 class Treasure 
  
   #Atributos
@@ -30,5 +30,11 @@ class Treasure
     return type
   end
   
+  def to_s()
+    return "\nNombre: #{@name} 
+    \tBonus: #{@bonus} 
+    \tTipo: #{@type} "
+   
+  end
 end
 end

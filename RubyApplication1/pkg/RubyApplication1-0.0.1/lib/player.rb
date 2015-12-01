@@ -2,10 +2,15 @@
 # To change this template file, choose Tools | Templates
 # and open the template in the editor.
 
-module Napakalaki
+
 require_relative "treasure"
 require_relative "dice"
 require_relative "player"
+require_relative "combat_result"
+require_relative "napakalaki"
+
+module Napakalaki
+
 class Player
   
   #Atributos
@@ -18,15 +23,17 @@ class Player
     @pendingBadConsequence = BadConsequence.newLevelNumberOfTreasures("",0,0,0)
     @level = 1
     @dead = true
+    @hiddenTreasures = []
+    @visibleTreasures = []
   end
   
-  def constructor_copia(player)
-    @level = player.level
-    @pendingBadConsequence = player.pendingBadConsequence
-    @dead = player.dead
-    @hiddenTreasures = player.hiddenTreasures
-    @visibleTreasures = player.visibleTreasures
-  end
+  #def constructor_copia(player)
+  #  @level = player.level
+  #  @pendingBadConsequence = player.pendingBadConsequence
+  #  @dead = player.dead
+  #  @hiddenTreasures = player.hiddenTreasures
+  #  @visibleTreasures = player.visibleTreasures
+  #end
   
   #Metodos
   
@@ -44,11 +51,12 @@ class Player
   #bonus que le proporcionan los tesoros que tenga equipados, según las reglas del
   #juego.
   def getCombatLevel()
+    level=@level
     @visibleTreasures.each do |t|
-      @level += t.getBonus()
+      level += t.getBonus()
     end
     @hiddenTreasures.each do |t|
-      @level += t.getBonus()
+      level += t.getBonus()
     end
     
     return level
@@ -59,7 +67,7 @@ class Player
     @level = level + 1
   end
   
-  def decrementLevel()
+  def decrementLevels(level)
     if(level < 1) then
       @level = 1
     else
@@ -79,10 +87,10 @@ class Player
     nTreasures = monster.getTreasuresGained()
     
     if(nTreasures > 0)
-       @dealer = CardDealer.instance
+       dealer = CardDealer.instance
        nTreasures.each do |treasure|
-          
-          @hiddenTreasures << treasure
+          t = dealer.nextTreasure() 
+          @hiddenTreasures << t
          
        end
     end
@@ -157,11 +165,7 @@ class Player
   
   #Devuelve true si el jugador está muerto, false en caso contrario.
   def isDead
-    @dead = false
-    if(this.dead == true)
-      dead=true
-    end
-  return dead
+    return dead
   end
     
   def getHiddenTreasures
@@ -173,20 +177,19 @@ class Player
   end
   
   def combat(monster)
-    combatResult
     myLevel = getCombatLevel()
-    monstersLevel = monster.getCombatLevel()
+    monsterLevel = monster.getCombatLevel()
     
-    if(myLevel > monstersLevel)
+    if(myLevel > monsterLevel)
       applyPrize(monster)
-      if(@level >= MAXLEVEL)
-        combatResult = WINGAME  
+      if(@level >= @@MAXLEVEL)
+        combateResult = NapakalakiGame::CombatResult::WINGAME  
       else
-        combatResult = WIN
+        combatResult = NapakalakiGame::CombatResult::WIN
       end
     else
       applyBadConsequence(monster)
-      combatResult = LOSE
+      combatResult = NapakalakiGame::CombatResult::LOSE
     end
     
     return combatResult
@@ -214,7 +217,7 @@ class Player
   end
   
   def discardHiddenTreasure(treasure)
-    @HiddenTreasures.remove(treasure)
+    @hiddenTreasures.remove(treasure)
     if((pendingBadConsequence != null) && (!pendingBadConsequence.isEmpty()))
       pendingBadConsequence.substractHiddenTreasure(treasure)
     end 
@@ -227,12 +230,17 @@ class Player
   #no tenga mal rollo que cumplir, utiliza el método isEmpty de la clase
   #BadConsequence.
   def validState()
-    return ( (@badConsequence != nil) && (@hiddenTreasures <= 4) )
+      resultado = true;
+      if( (!@pendingBadConsequence.isEmpty ) || (@hiddenTreasures.length > 4) )
+            resultado = false;
+      end
+      return resultado
+    
   end
   
   def initTreasures
-    dealer = CardDealer.instance
-    dice = Dice.instance
+    dealer = CardDealer::CardDealer.instance
+    dice = Dice::Dice.instance
     
     bringToLife()
     treasure = dealer.nextTreasure()
@@ -240,15 +248,11 @@ class Player
     
     number = dice.nextNumber()
     
-    if( number == 1)
+    if( number == 6)
       treasure = dealer.nextTreasure()
       @hiddenTreasures << treasure
     end
     if( number > 1 )
-      treasure = dealer.nextTreasure()
-      @hiddenTreasures << treasure
-    end
-    if ( number == 6 )
       treasure = dealer.nextTreasure()
       @hiddenTreasures << treasure
     end

@@ -21,18 +21,24 @@ class Monster
   end
   
   
-  
+  def getCombatLevel
+    return @combatLevel
+  end
   #Devuelve el número de niveles ganados proporcionados por su buen rollo.
-  def getLevelesGained
+  def getLevelsGained
         
-      @premio.level
+    return @premio.level
   end
     
   #Devuelve el número de tesoros ganados proporcionados por su buen rollo.
   def getTreasuresGained
 
-      @premio.treasures
+    return @premio.treasures
   
+  end
+  
+  def getBadConsequence
+    return malRollo 
   end
   
   def to_s
@@ -41,5 +47,4 @@ class Monster
   
 end
 end
-
 

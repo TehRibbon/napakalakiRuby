@@ -5,7 +5,7 @@
 module Napakalaki
   #Enumeracion al igual que TreasureKind
   WINGAME = :WINGAME
-  LOOSE = :LOOSE
+  LOSE = :LOSE
   WIN = :WIN
     
 end

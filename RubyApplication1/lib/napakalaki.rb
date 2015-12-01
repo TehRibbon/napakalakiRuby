@@ -5,7 +5,9 @@ require_relative "card_dealer"
 require_relative "monster"
 require_relative "player"
 
+
 module Napakalaki
+  
 
 require "singleton"
 
@@ -25,14 +27,15 @@ require "singleton"
     #elementos haya en names, que es el array de String que contiene el nombre de los
     #jugadores.
     def initPlayers(names)
-      @dealer = CardDealer.instance #inicializo dealer
+      @dealer = CardDealer::CardDealer.instance #inicializo dealer
       @players = Array.new
 
       #creamos tantos jugadores como nombres 
       names.each do |nombre_jugador|
         players << Player.new(nombre_jugador)
       end
-      nextPlayer()
+      @currentPlayer = nextPlayer
+      
       
     end
 
@@ -49,24 +52,28 @@ require "singleton"
     #Una vez calculado el índice, se devuelve el jugador que ocupa esa posición.
     def nextPlayer
 
-
-      #indice_siguiente
+      
+      
       total_jugadores = @players.length
       
       if(@currentPlayer == nil) then
-        indice_siguiente = rand(total_jugadores)
+        posicion = rand(total_jugadores - 1)
+        aux = players.at(posicion)
+        @currentPlayer = aux
+        
       else
-        indice_jugador_actual = @players.index(@currentPlayer)
-        if(indice_jugador_actual == total_jugadores - 1) then
-          indice_siguiente= 0
-        else 
-          indice_siguiente = indice_jugador_actual + 1
-        end
+       
+        posicion = players.index(@currentPlayer)
+        posicion = posicion + 1
+        if(posicion >= total_jugadores)
+          #Seleccionamos el primero
+          aux = players.at(0)
+          @currentPlayer = aux
+        else
+          aux = players.at(posicion)
+          @currentPlayer = aux
+        end  
       end
-      
-      
-      siguiente_jugador = @players.at(indice_siguiente)
-      @currentPlayer = siguiente_jugador
 
       return @currentPlayer
     end
@@ -76,13 +83,12 @@ require "singleton"
       #true en caso contrario, para ello usa el método de Player validState() donde se realizan las
       #comprobaciones pertinentes.
     def nextTurnAllowed
-      if (@currentPlayer == nil) then
-        allowed = true #la primera vez currentPlayer está sin asignar
-      else
-        allowed = @currentPlayer.validState()
+      solucion = true
+      if (@currentPlayer != nil) then
+        solucion = @currentPlayer.validState() #la primera vez currentPlayer está sin asignar
       end
       
-      return allowed
+      return solucion
     end
 
     #Se asigna un enemigo a cada jugador. Esta asignación se hace de forma aleatoria teniendo
@@ -115,7 +121,7 @@ require "singleton"
     #otro caso, el jugador pierde el combate y se aplica el mal rollo correspondiente.
     def developCombat
       
-      combatResult = @currentPlayer.combat
+      combatResult = @currentPlayer.combat(currentMonster)
       dealer.giveMonsterBack(@currentMonster)
       return combatResult
 
@@ -149,20 +155,20 @@ require "singleton"
     def initGame(players)
       
       initPlayers(players)
-      setEnemies()
       dealer.initCards()
       nextTurn()
-      
+      setEnemies()
+
 
     end
 
     #Devuelve el jugador actual (currentPlayer).
-    def getCurrentPlayer
+    def getCurrentPlayer()
       return @currentPlayer
     end
 
     #Devuelve el monstruo en juego (currentMonster).
-    def getCurrentMonster
+    def getCurrentMonster()
       return @currentMonster
     end
 
@@ -178,22 +184,16 @@ require "singleton"
     #initTreasures.
     def nextTurn
       stateOk = nextTurnAllowed()
-      
       if(stateOk) then
         @currentMonster = @dealer.nextMonster()
         @currentPlayer = nextPlayer()
-        @dead = isDead()
+        dead = @currentPlayer.isDead()
+        
         if(dead)
           @currentPlayer.initTreasures()
         end
-        
-      else
-        @currentMonster = @dealer.nextMonster()
       end
       
-      if(@currentPlayer = nil)
-        stateOk = true
-      end
 
      return stateOk
     end
@@ -216,5 +216,4 @@ require "singleton"
       "\n #{@name}"
     end
   end
-  
 end
