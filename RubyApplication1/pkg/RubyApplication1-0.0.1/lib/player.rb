@@ -15,11 +15,9 @@ class Player
   #Constructor
   def initialize(name)
     @name = name
-    
+    @pendingBadConsequence = BadConsequence.newLevelNumberOfTreasures("",0,0,0)
+    @level = 1
     @dead = true
-    @level = 1 #inicializamos nivel a 1
-    @visibleTreasures = Array.new
-    @hiddenTreasures = Array.new
   end
   
   def constructor_copia(player)
@@ -325,6 +323,10 @@ class Player
     @hiddenTreasures.each do |treasure|
       discardHiddenTreasure(treasure)
     end
+  end
+  
+  def to_s
+    return @name
   end
 
  end
