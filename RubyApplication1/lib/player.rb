@@ -132,7 +132,23 @@ class Player
           resultado = true
         end
        end
-     
+     when TreasureKind::BOTHHANDS
+       if(isTreasureKindInUse(TreasureKind::BOTHHANDS)) then
+         resultado = false
+       else
+         i = 0
+         @visibleTreasures.each do |tesoros|
+           if(tesoros.getType == TreasureKind::ONEHAND) then
+             i += 1
+           end
+         end
+         if(i == 0)
+           resultado = true
+         else
+           resultado = false
+         end
+        
+       end
     
     else
         resultado = !isTreasureKindInUse(treasure.getType())
