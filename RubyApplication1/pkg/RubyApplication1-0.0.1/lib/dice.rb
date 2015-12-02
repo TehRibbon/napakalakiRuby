@@ -9,6 +9,7 @@ class Dice
     def Dice()
       
     end
+    private :Dice
     
     def getInstance()
       instance = Dice.instance

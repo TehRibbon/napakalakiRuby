@@ -15,6 +15,7 @@ require "singleton"
     def initialize
       @dealer = CardDealer.instance
     end
+    private :initialize
 
     #Metodos
 
@@ -66,9 +67,11 @@ require "singleton"
         end
         
         if (posicion >= @players.length)
+          
           @currentPlayer = @players.at(0)
         else
-          @currentPlayer = @players.at(posicion)
+          
+          @currentPlayer = @players.at(posicion) 
       end
       end
       return @currentPlayer
@@ -95,7 +98,7 @@ require "singleton"
     #en cuenta que un jugador no puede ser enemigo de sí mismo.
     def setEnemies
       posAleatoria = 0
-      tamanio = @players.length
+      tamanio = @players.length - 1
       @players.each do |enemigo|
         posAleatoria = Random.rand(0 ..tamanio)
         
@@ -127,7 +130,7 @@ require "singleton"
 
     end
 
-    def discardVisibleTreasures(treasures)
+    def discardVisibleTreasure(treasures)
       treasures.each do |descartado|
         @currentPlayer.discardVisibleTreasure(descartado)
         @dealer.giveTreasureBack(descartado)
@@ -135,7 +138,7 @@ require "singleton"
       end
     end
 
-    def discardHiddenTreasures(treasures)
+    def discardHiddenTreasure(treasures)
       treasures.each do |descartado|
         @currentPlayer.discardHiddenTreasure(descartado)
         @dealer.giveTreasureBack(descartado)

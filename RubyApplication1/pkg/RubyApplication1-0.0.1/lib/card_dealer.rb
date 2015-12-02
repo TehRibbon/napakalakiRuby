@@ -17,6 +17,10 @@ class CardDealer
     attr_accessor :usedMonsters, :unusedMonsters, :usedTreasures, :unusedTreasures
     
     
+    def initialize
+    end
+    private :initialize
+    
     #Inicializa el mazo de cartas de Tesoros (unusedTreasures) con todas las cartas de
     #tesoros proporcionadas en el documento de cartas de tesoros.
     def initTreasureCardDeck
@@ -55,6 +59,7 @@ class CardDealer
         @unusedTreasures << Treasure.new("Tentaculo de pega", 2, TreasureKind::HELMET);
         @unusedTreasures << Treasure.new("Zapato deja-amigos", 1, TreasureKind::SHOES);
     end
+    private :initTreasureCardDeck
     
     #Inicializa el mazo de cartas de monstruos (unusedMonsters), con todas las cartas
     #de monstruos proporcionadas en el documento de cartas de monstruos. Se
@@ -164,15 +169,18 @@ class CardDealer
         @unusedMonsters << Monster.new("Bicefalo",20,prize,badConsequence)
 
     end
+    private :initMonstersCardDeck
     
     def shuffleTreasures
       @unusedTreasures = @unusedTreasures.shuffle
       
     end
+    private :shuffleTreasures
     
     def shuffleMonsters
       @unusedTreasures = @unusedTreasures.shuffle
     end
+    private :shuffleMonsters
     
     def getInstance
       instance = CardDealer.instance

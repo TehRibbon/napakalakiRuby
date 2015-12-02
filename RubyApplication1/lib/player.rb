@@ -23,6 +23,7 @@ class Player
     @pendingBadConsequence = BadConsequence.newLevelNumberOfTreasures("",0,0,0)
     @level = 1
     @dead = true
+    @canISteal = true
     @hiddenTreasures = []
     @visibleTreasures = []
   end
@@ -46,7 +47,7 @@ class Player
   def bringToLife()
     @dead=false
   end
-  
+  private :bringToLife
   #Devuelve el nivel de combate del jugador, que viene dado por su nivel más los
   #bonus que le proporcionan los tesoros que tenga equipados, según las reglas del
   #juego.
@@ -61,15 +62,13 @@ class Player
     
     return level
   end
+  private :getCombatLevel
   
   #Incrementa el nivel del jugador en i niveles, teniendo en cuenta las reglas del juego.
-  def incrementLevels()
-    if(@level + 1 >= @@MAXLEVEL)
-      @level = @@MAXLEVEL
-    else
-      @level = @level + i
-    end
+  def incrementLevels(level)
+    @level += level
   end
+  private :incrementLevels
   
   def decrementLevels(level)
     if(level < 1) then
@@ -78,24 +77,25 @@ class Player
       @level = level - 1
     end
   end
+  private :decrementLevels
   
   
   #Asigna el mal rollo al jugador, dándole valor a su atributo pendingBadConsequence.
   def setPendingBadConsequence(badConsequence)
     @pendingBadConsequence = badConsequence
   end
+  private :setPendingBadConsequence
   
   def applyPrize(monster)
     incrementLevels(monster.getLevelsGained())
     nTreasures = monster.getTreasuresGained()
     
-    deck = CardDealer.getInstance()
+    deck = CardDealer.instance
     
     for i in 0..nTreasures-1
       @hiddenTreasures << deck.nextTreasure()
     end
   end
-  
   private :applyPrize
   
   def applyBadConsequence(monster)
@@ -106,6 +106,7 @@ class Player
     pendingBad = badConsequence.adjustToFitTreasureList(@visibleTreasures, @hiddenTreasures)
     setPendingBadConsequence(pendingBad)
   end
+  private :applyBadConsequence
   
   #Comprueba si el tesoro t se puede pasar de oculto a visible según las reglas del juego.
   def canMakeTreasureVisible(treasure)
@@ -154,14 +155,16 @@ class Player
     end
     return contador
   end
+  private :howManyVisibleTreasures
   
   #Cambia el estado de jugador a muerto, modificando el correspondiente atributo.
   #Esto ocurre cuando el jugador, por algún motivo, ha perdido todos sus tesoros.
   def dieIfNoTreasures()
-    if(hiddenTreasures.isEmpty && visibleTreasures.isEmpty) then
+    if(@hiddenTreasures.empty? && @visibleTreasures.empty?) then
       dead = true
     end
   end
+  private :dieIfNoTreasures
   
   #Devuelve true si el jugador está muerto, false en caso contrario.
   def isDead
@@ -209,17 +212,17 @@ class Player
   end
   
   def discardVisibleTreasure(treasure)
-    @visibleTreasures.remove(treasure)
-    if((pendingBadConsequence != null) && (!pendingBadConsequence.isEmpty()))
-      pendingBadConsequence.substractVisibleTreasure(treasure)
+    @visibleTreasures.delete(treasure)
+    if((@pendingBadConsequence != nil) && (!@pendingBadConsequence.isEmpty()))
+      @pendingBadConsequence.substractVisibleTreasure(treasure)
     end 
     dieIfNoTreasures()
   end
   
   def discardHiddenTreasure(treasure)
-    @hiddenTreasures.remove(treasure)
-    if((pendingBadConsequence != null) && (!pendingBadConsequence.isEmpty()))
-      pendingBadConsequence.substractHiddenTreasure(treasure)
+    @hiddenTreasures.delete(treasure)
+    if((@pendingBadConsequence != nil) && (!@pendingBadConsequence.isEmpty()))
+      @pendingBadConsequence.substractHiddenTreasure(treasure)
     end 
     dieIfNoTreasures()
     
@@ -233,6 +236,7 @@ class Player
       resultado = true;
       if( (!@pendingBadConsequence.isEmpty ) or (@hiddenTreasures.length > 4) )
             resultado = false;
+            
       end
       return resultado
     
@@ -274,7 +278,7 @@ class Player
   end
   
   def stealTreasure()
-    treasure
+    
     canI = @canISteal
     if(canI)
       canYou = @enemy.canYouGiveMeATreasure()
@@ -283,8 +287,6 @@ class Player
         @hiddenTreasures << treasure
         haveStolen()
       end
-    else
-      treasure = nil
     end
     return treasure
   end
@@ -299,10 +301,12 @@ class Player
   
   #Devuelve un tesoro elegido al azar de entre los tesoros ocultos del jugador.
   def giveMeATreasure
+    max = @hiddenTreasures.length - 1
+    posAleatoria = Random.rand(0..max)
     
-    numero = Random.rand.next(HiddenTreasures.length + 1)
-    tesoro = HiddenTreasures.get(numero)
-    return tesoro    
+    solucion = @hiddenTreasures.at(posAleatoria)
+    @hiddenTreasures.delete(solucion)
+    return solucion
     
     
   end
@@ -310,7 +314,7 @@ class Player
   #Devuelve true si el jugador no ha robado ningún tesoro a su enemigo y false en
   #caso contrario.
   def canISteal
-    return canISteal    
+    return @canISteal    
 
   end
   
@@ -318,7 +322,7 @@ class Player
   #en caso contrario.
   def canYouGiveMeATreasure
     canYou = false
-    if(canISteal == true)
+    if(@hiddenTreasures.length > 0)
       canYou = true
     end
     return canYou
@@ -340,7 +344,10 @@ class Player
   end
   
   def to_s
-    return @name
+    "#{@name}
+    Level: #{@level}
+    Dead: #{@dead}
+    PendingBad: #{@pendingBadConsequence}"
   end
 
  end

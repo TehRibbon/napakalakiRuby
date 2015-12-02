@@ -48,7 +48,7 @@ class BadConsequence
   def isEmpty
     empty = false
     
-    if(text.empty? && death == false && levels == 0 && nVisiblesTreasures == 0 && nHiddenTreasures == 0 && specificVisibleTreasures.empty? && specificHiddenTreasures.empty?) then
+    if(text == "" && death == false && levels == 0 && nVisiblesTreasures == 0 && nHiddenTreasures == 0 && specificVisibleTreasures.empty? && specificHiddenTreasures.empty?) then
       empty = true
     end
     
@@ -79,35 +79,35 @@ class BadConsequence
   #esta actualización no implique cambio alguno, que lleve a eliminar un tipo específico de
   #tesoro visible, o a reducir el número de tesoros visibles pendientes.
   def substractVisibleTreasure(treasure)
-    specificVisibleTreasure.remove.getType(treasure)
+    @specificVisibleTreasures.delete(treasure.getType)
   end
   
   #Igual que el anterior, pero para los ocultos.
   def substractHiddenTreasure(treasure)
-    specificHiddenTreasure.remove.getType(treasure)
+    @specificHiddenTreasures.delete(treasure.getType)
   end
   
   def adjustToFitTreasureList(v,h) #tanto v como h son vectores de tipo Treasure(cambiar nombre de la variable al implementar)
     
-    if(specificHiddenTreasures.empty? && specificVisibleTreasures.empty?)
+    if(@specificHiddenTreasures.empty? && @specificVisibleTreasures.empty?)
       visibles = 0
       ocultos = 0
-      tamV = v.lenght
-      tamO = h.lenght
+      tamV = v.length
+      tamO = h.length
       
-      if(nVisiblesTreasures <= tamV)
-        visibles = nVisiblesTreasures
-      elsif (tamV < nVisiblesTreasures)
+      if(@nVisiblesTreasures <= tamV)
+        visibles = @nVisiblesTreasures
+      elsif (tamV < @nVisiblesTreasures)
         visibles = tamV
       end
       
-      if(nHiddenTreasures <= tamO)
-        ocultos = nHiddenTreasures
-      elsif(tamO < nHiddenTreasures)
+      if(@nHiddenTreasures <= tamO)
+        ocultos = @nHiddenTreasures
+      elsif(tamO < @nHiddenTreasures)
         ocultos = tamO
       end
       
-      
+      bs = BadConsequence.newLevelNumberOfTreasures("",0, visibles, ocultos) 
     else
     
     tVisible = Array.new

@@ -49,13 +49,14 @@ class GameTester
               puts "\n\n Ganaste el combate"
             when NapakalakiGame::CombatResult::LOSE then
               puts "\n\n Has perdido el combate, te toca cumplir el mal rollo"
+              
            end #case
            if (combatResult != NapakalakiGame::CombatResult::WINGAME) then
             begin #Hasta que se avance de turno 
               puts "******* ******* ******* ******* ******* ******* *******"
               puts "\n\n Turno de: " + currentPlayer.to_s()
               if currentPlayer.canISteal then
-                command = getCommandAfterFighting()
+                command = getCommandAfterFighting()              
               else
                 command = getCommandAfterFightingNoSteal()
               end
