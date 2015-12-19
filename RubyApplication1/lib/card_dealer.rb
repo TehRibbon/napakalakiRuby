@@ -14,7 +14,7 @@ class CardDealer
     include Singleton
     
     #Atributos
-    attr_accessor :usedMonsters, :unusedMonsters, :usedTreasures, :unusedTreasures
+    attr_accessor :usedMonsters, :unusedMonsters, :usedCultists, :unusedCultists, :usedTreasures, :unusedTreasures
     
     
     def initialize
@@ -167,9 +167,57 @@ class CardDealer
         prize = Prize.new(1,1)
         badConsequence = BadConsequence.newLevelSpecificTreasures("Te faltan manos para tanta cabeza. Pierdes 3 niveles y tus tesoros visibles de las manos.", 3,[TreasureKind::BOTHHANDS,TreasureKind::ONEHAND], [])
         @unusedMonsters << Monster.new("Bicefalo",20,prize,badConsequence)
-
+         
+        #El mal indecible impronunciable
+        prize = Prize.new(3,1)
+        badConsequence = BadConsequence.newLevelNumberOfTreasures("Pierdes 1 mano visible.", 0,1,0)
+        @unusedMonsters << Monster.newMonster("El mal indecible impronunciable",10,prize,badConsequence,-2)
+        
+        #Testigos Oculares
+        prize = Prize.new(2,1)
+        badConsequence = BadConsequence.newLevelNumberOfTreasures("Pierdes tus tesoros visibles. Ja ja ja.", 0,4,0)
+        @unusedMonsters << Monster.newMonster("Testigos Oculares",6,prize,badConsequence,2)
+        
+        #El gran ctulhu
+        prize = Prize.new(2,5)
+        badConsequence = BadConsequence.newDeath("Hoy no es tu dia de suerte. Mueres.")
+        @unusedMonsters << Monster.newMonster("El gran ctulhu",20,prize,badConsequence,4)
+        
+        #Serpiente politico
+        prize = Prize.new(2,1)
+        badConsequence = BadConsequence.newLevelNumberOfTreasures("Tu gobierno te recorta 2 niveles.", 2,0,0)
+        @unusedMonsters << Monster.newMonster("Serpiente politico",8,prize,badConsequence,-2)
+        
+        #Felpuggoth
+        prize = Prize.new(1,1)
+        badConsequence = BadConsequence.newLevelSpecificTreasures("Pierdes tu casco y tu armadura visible. Pierdes tus manos ocultas.", 0,[TreasureKind::ARMOR,TreasureKind::HELMET],[TreasureKind::BOTHHANDS,TreasureKind::ONEHAND])
+        @unusedMonsters << Monster.newMonster("Felpuggoth",2,prize,badConsequence,5)
+        
+        #Shoggoth
+        prize = Prize.new(4,2)
+        badConsequence = BadConsequence.newLevelNumberOfTreasures("Pierdes 2 niveles.", 2,0,0)
+        @unusedMonsters << Monster.newMonster("Shoggoth.",16,prize,badConsequence,-4)
+        
+        #Lolitagooth
+        prize = Prize.new(1,1)
+        badConsequence = BadConsequence.newLevelNumberOfTreasures("Pintalabios negro. Pierdes 2 niveles.", 2,0,0)
+        @unusedMonsters << Monster.newMonster("Lolitagooth",2,prize,badConsequence,3)
     end
     private :initMonstersCardDeck
+    
+    def initCultistCardDeck
+        @unusedCultists = Array.new
+        @usedCultists = Array.new
+        
+        @unusedCultists << Cultist.new("Sectario",1)
+        @unusedCultists << Cultist.new("Sectario",2)
+        @unusedCultists << Cultist.new("Sectario",1)
+        @unusedCultists << Cultist.new("Sectario",2)
+        @unusedCultists << Cultist.new("Sectario",1)
+        @unusedCultists << Cultist.new("Sectario",1)
+        
+    end
+    private :initCultistCardDeck
     
     def shuffleTreasures
       @unusedTreasures = @unusedTreasures.shuffle
@@ -178,9 +226,14 @@ class CardDealer
     private :shuffleTreasures
     
     def shuffleMonsters
-      @unusedTreasures = @unusedTreasures.shuffle
+      @unusedMonsters = @unusedMonsters.shuffle
     end
     private :shuffleMonsters
+    
+    def shuffleCultists
+      @unusedTreasures = @unusedTreasures.shuffle
+    end
+    private :shuffleCultists
     
     def getInstance
       instance = CardDealer.instance
@@ -255,6 +308,38 @@ class CardDealer
       return m
     end
     
+    def nextCultist
+      #Comprobamos si tenemos cartas en el mazo
+      if (@unusedCultists.empty?) then
+            
+        #Recorremos las cartas descartadas
+        @usedCultists.each do |c| 
+                
+          #Las agregamos al mazo sin usar
+          @unusedCultists << c
+        
+        end
+            
+        #Las barajamos
+        shuffleCultists
+            
+        #Limpiamos el mazo de descartes
+        @usedCultists.clear
+        
+      end
+        
+      #Obtengo la primera carta del mazo
+      c = @unusedCultists.at(0)
+        
+      #La agregamos al mazo de descartes
+      @usedCultists << c
+        
+      #La eliminamos del mazo
+      @unusedCultists.delete(c);
+        
+      #Devolvemos la carta
+      return c
+    end
     #Introduce en el mazo de descartes de tesoros (usedTreasures) el tesoro t.
     def giveTreasureBack(treasure)
       @usedTreasures << treasure #inicializado en initTreasureCard

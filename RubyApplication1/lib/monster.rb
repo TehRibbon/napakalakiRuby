@@ -11,14 +11,26 @@ class Monster
   attr_accessor :combatLevel
   attr_accessor :malRollo #atributo de la clase BadConsequence
   attr_accessor :premio #Atributo de la clase Prize
+  attr_accessor :levelChangeAgainstCultistPlayer
   
   def initialize(name, combatLevel, premio, malRollo)
    @name = name
    @combatLevel = combatLevel
    @premio = premio
    @malRollo = malRollo
+   @levelChangeAgainstCultistPlayer = 0
   end
   
+  def Monster.newMonster(name, level, badConsequence, prize, ic)
+    @name = name
+    @combatLevel = level
+    @malRollo = badConsequence
+    @premio = prize
+    @levelChangeAgainstCultistPlayer = ic
+  end
+  def getCombatLevelAgainstCultistPlayer
+    
+  end
   
   def getCombatLevel
     return @combatLevel

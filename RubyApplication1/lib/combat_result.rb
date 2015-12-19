@@ -8,6 +8,7 @@ module NapakalakiGame
   WINGAME = :WINGAME
   LOSE = :LOSE
   WIN = :WIN
+  LOSEANDCONVERT = :LOSEANDCONVERT
   
   end
 end

@@ -28,6 +28,17 @@ class Player
     @visibleTreasures = []
   end
   
+  def Player.newCopia(player)
+    @name = player.name
+    @level = player.level
+    @dead = player.dead
+    @canISteal = player.canISteal
+    @hiddenTreasures = player.hiddenTreasures
+    @visibleTreasures = player.visibleTreasures
+    @enemy = player.enemy
+    @pendingBadConsequence = player.pendingBadConsequence
+    
+  end
   #def constructor_copia(player)
   #  @level = player.level
   #  @pendingBadConsequence = player.pendingBadConsequence
