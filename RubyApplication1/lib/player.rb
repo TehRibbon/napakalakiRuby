@@ -2,14 +2,12 @@
 # To change this template file, choose Tools | Templates
 # and open the template in the editor.
 
-
 require_relative 'treasure'
 require_relative 'dice.rb'
 require_relative 'combat_result.rb'
 require_relative 'napakalaki.rb'
 require_relative 'bad_consequence.rb'
-
-
+require_relative 'numeric_bad_consequence.rb'
 
 class Player
   
@@ -20,7 +18,7 @@ class Player
   #Constructor
   def initialize(name)
     @name = name
-    @pendingBadConsequence = BadConsequence.newLevelNumberOfTreasures("",0,0,0)
+    @pendingBadConsequence = SpecificBadConsequence.new("",0,0,0)
     @level = 1
     @dead = true
     @canISteal = true
@@ -39,16 +37,27 @@ class Player
     @pendingBadConsequence = player.pendingBadConsequence
     
   end
-  #def constructor_copia(player)
-  #  @level = player.level
-  #  @pendingBadConsequence = player.pendingBadConsequence
-  #  @dead = player.dead
-  #  @hiddenTreasures = player.hiddenTreasures
-  #  @visibleTreasures = player.visibleTreasures
-  #end
+  
   
   #Metodos
   
+  
+  def getOponentLevel(m)
+    return m.getCombatLevel()
+  end
+  protected :getOponentLevel
+  
+  def shouldConvert
+        dice = Dice.instance
+        resultado = false;
+        dado = dice.nextNumber;
+        if(dado == 1)
+            resultado = true;
+        end
+        return false;
+    
+  end
+  protected :shouldConvert
   #Devuelve el nombre del jugador.
   def getname()
     return @name
@@ -73,7 +82,7 @@ class Player
     
     return level
   end
-  private :getCombatLevel
+  protected :getCombatLevel
   
   #Incrementa el nivel del jugador en i niveles, teniendo en cuenta las reglas del juego.
   def incrementLevels(level)
@@ -207,8 +216,8 @@ class Player
   end
   
   def combat(monster)
-    myLevel = getCombatLevel()
-    monsterLevel = monster.getCombatLevel()
+    myLevel = getCombatLevel
+    monsterLevel = getOponentLevel(monster)
     
     if(myLevel > monsterLevel)
       applyPrize(monster)
@@ -219,7 +228,12 @@ class Player
       end
     else
       applyBadConsequence(monster)
-      combatResult = NapakalakiGame::CombatResult::LOSE
+      seConvierte = shouldConvert
+      if( shouldConvert )
+        combatResult = NapakalakiGame::CombatResult::LOSEANDCONVERT
+      else
+        combatResult = NapakalakiGame::CombatResult::LOSE
+      end
     end
     
     return combatResult

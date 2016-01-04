@@ -1,8 +1,9 @@
 # To change this license header, choose License Headers in Project Properties.
 # To change this template file, choose Tools | Templates
 # and open the template in the editor.
-require_relative "card_dealer.rb"
-require_relative "player.rb" 
+require_relative 'card_dealer.rb'
+require_relative 'player.rb'
+require_relative 'combat_result.rb'
 
 require "singleton"
 
@@ -23,7 +24,7 @@ require "singleton"
     #elementos haya en names, que es el array de String que contiene el nombre de los
     #jugadores.
     def initPlayers(names)
-      #@dealer = CardDealer.instance
+      
       @players = Array.new
 
       #creamos tantos jugadores como nombres 
@@ -123,8 +124,14 @@ require "singleton"
     #supera al del monstruo, se aplica el buen rollo y se puede ganar el combate o el juego, en
     #otro caso, el jugador pierde el combate y se aplica el mal rollo correspondiente.
     def developCombat
-      
-      combatResult = @currentPlayer.combat(currentMonster)
+      combatResult = @currentPlayer.combat(@currentMonster)
+      if(combatResult == NapakalakiGame::CombatResult::LOSEANDCONVERT)
+        cultist = @dealer.nextCultist
+        nuevo = CultistPlayer.new(@currentPlayer, cultist)
+        pos = @players.index(@currentPlayer)
+        @players.insert(pos, nuevo)
+        @currentPlayer = nuevo
+      end
       dealer.giveMonsterBack(@currentMonster)
       return combatResult
 
@@ -206,7 +213,7 @@ require "singleton"
     #caso contrario devuelve false.
     def endOfGame(result)
       resultado
-      if(result == CombatResult.WINGAME)
+      if(result == NapakalakiGame::CombatResult::WINGAME)
         resultado = true
       else 
         resultado = false

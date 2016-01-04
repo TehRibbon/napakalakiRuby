@@ -28,8 +28,9 @@ class Monster
     @premio = prize
     @levelChangeAgainstCultistPlayer = ic
   end
+  
   def getCombatLevelAgainstCultistPlayer
-    
+    resultado = @combatLevel + @levelChangeAgainstCultistPlayer
   end
   
   def getCombatLevel
