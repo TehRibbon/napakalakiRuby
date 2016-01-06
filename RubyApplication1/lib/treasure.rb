@@ -17,15 +17,15 @@ class Treasure
   end
   
   def getName
-    return name
+    return @name
   end
   
   def getBonus
-    return bonus
+    return @bonus
   end
   
   def getType
-    return type
+    return @type
   end
   
   def to_s()

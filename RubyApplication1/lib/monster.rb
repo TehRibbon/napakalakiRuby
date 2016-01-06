@@ -13,21 +13,14 @@ class Monster
   attr_accessor :premio #Atributo de la clase Prize
   attr_accessor :levelChangeAgainstCultistPlayer
   
-  def initialize(name, combatLevel, premio, malRollo)
+  def initialize(name, combatLevel, premio, malRollo, ic=0)
    @name = name
    @combatLevel = combatLevel
    @premio = premio
    @malRollo = malRollo
-   @levelChangeAgainstCultistPlayer = 0
+   @levelChangeAgainstCultistPlayer = ic
   end
-  
-  def Monster.newMonster(name, level, badConsequence, prize, ic)
-    @name = name
-    @combatLevel = level
-    @malRollo = badConsequence
-    @premio = prize
-    @levelChangeAgainstCultistPlayer = ic
-  end
+
   
   def getCombatLevelAgainstCultistPlayer
     resultado = @combatLevel + @levelChangeAgainstCultistPlayer

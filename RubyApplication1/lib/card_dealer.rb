@@ -38,7 +38,7 @@ class CardDealer
         @unusedTreasures << Treasure.new("Botas de lluvia acida",1, TreasureKind::BOTHHANDS );
         @unusedTreasures << Treasure.new("Casco minero",2,TreasureKind::HELMET);
         @unusedTreasures << Treasure.new("Ametralladora Thompson", 4, TreasureKind::BOTHHANDS);
-        @unusedTreasures <<Treasure.new("Camiseta de la UGR",1, TreasureKind::ARMOR);
+        @unusedTreasures << Treasure.new("Camiseta de la UGR",1, TreasureKind::ARMOR);
         @unusedTreasures << Treasure.new("Clavo de rail ferroviario", 3, TreasureKind::ONEHAND);
         @unusedTreasures << Treasure.new("Cuchillo de sushi arcano",2, TreasureKind::ONEHAND);
         @unusedTreasures << Treasure.new("Fez alopodo", 3, TreasureKind::HELMET);
@@ -175,37 +175,37 @@ class CardDealer
         #El mal indecible impronunciable
         prize = Prize.new(3,1)
         badConsequence = NumericBadConsequence.new("Pierdes 1 mano visible.", 0,1,0)
-        @unusedMonsters << Monster.newMonster("El mal indecible impronunciable",10,prize,badConsequence,-2)
+        @unusedMonsters << Monster.new("El mal indecible impronunciable",10,prize,badConsequence,-2)
         
         #Testigos Oculares
         prize = Prize.new(2,1)
         badConsequence = NumericBadConsequence.new("Pierdes tus tesoros visibles. Ja ja ja.", 0,4,0)
-        @unusedMonsters << Monster.newMonster("Testigos Oculares",6,prize,badConsequence,2)
+        @unusedMonsters << Monster.new("Testigos Oculares",6,prize,badConsequence,2)
         
         #El gran ctulhu
         prize = Prize.new(2,5)
         badConsequence = DeathBadConsequence.new("Hoy no es tu dia de suerte. Mueres.")
-        @unusedMonsters << Monster.newMonster("El gran ctulhu",20,prize,badConsequence,4)
+        @unusedMonsters << Monster.new("El gran ctulhu",20,prize,badConsequence,4)
         
         #Serpiente politico
         prize = Prize.new(2,1)
         badConsequence = NumericBadConsequence.new("Tu gobierno te recorta 2 niveles.", 2,0,0)
-        @unusedMonsters << Monster.newMonster("Serpiente politico",8,prize,badConsequence,-2)
+        @unusedMonsters << Monster.new("Serpiente politico",8,prize,badConsequence,-2)
         
         #Felpuggoth
         prize = Prize.new(1,1)
         badConsequence = SpecificBadConsequence.new("Pierdes tu casco y tu armadura visible. Pierdes tus manos ocultas.", 0,[TreasureKind::ARMOR,TreasureKind::HELMET],[TreasureKind::BOTHHANDS,TreasureKind::ONEHAND])
-        @unusedMonsters << Monster.newMonster("Felpuggoth",2,prize,badConsequence,5)
+        @unusedMonsters << Monster.new("Felpuggoth",2,prize,badConsequence,5)
         
         #Shoggoth
         prize = Prize.new(4,2)
         badConsequence = NumericBadConsequence.new("Pierdes 2 niveles.", 2,0,0)
-        @unusedMonsters << Monster.newMonster("Shoggoth.",16,prize,badConsequence,-4)
+        @unusedMonsters << Monster.new("Shoggoth.",16,prize,badConsequence,-4)
         
         #Lolitagooth
         prize = Prize.new(1,1)
         badConsequence = NumericBadConsequence.new("Pintalabios negro. Pierdes 2 niveles.", 2,0,0)
-        @unusedMonsters << Monster.newMonster("Lolitagooth",2,prize,badConsequence,3)
+        @unusedMonsters << Monster.new("Lolitagooth",2,prize,badConsequence,3)
     end
     private :initMonstersCardDeck
     

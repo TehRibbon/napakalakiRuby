@@ -2,12 +2,13 @@
 # To change this template file, choose Tools | Templates
 # and open the template in the editor.
 
-require_relative 'treasure'
+require_relative 'treasure.rb'
 require_relative 'dice.rb'
 require_relative 'combat_result.rb'
 require_relative 'napakalaki.rb'
 require_relative 'bad_consequence.rb'
 require_relative 'numeric_bad_consequence.rb'
+require_relative 'monster.rb'
 
 class Player
   
@@ -43,7 +44,7 @@ class Player
   
   
   def getOponentLevel(m)
-    return m.getCombatLevel()
+    return m.getCombatLevel
   end
   protected :getOponentLevel
   

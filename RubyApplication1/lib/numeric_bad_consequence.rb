@@ -8,7 +8,7 @@ class NumericBadConsequence < BadConsequence
   
   def initialize(aText, someLevels, someVisibleTreasures, someHiddenTreasures)
     super(aText, someLevels)
-    @nVisibleTreasures = someVisibleTreasures
+    @nVisiblesTreasures = someVisibleTreasures
     @nHiddenTreasures = someHiddenTreasures
   end   
   
@@ -16,10 +16,9 @@ class NumericBadConsequence < BadConsequence
   
   
   def isEmpty
-  if(@nVisiblesTreasures == 0 && @nHiddenTreasures == 0) then
+    empty = false
+    if(@nVisiblesTreasures == 0 && @nHiddenTreasures == 0) then
       empty = true
-    else
-      empty = false
     end
     
     return empty
@@ -34,7 +33,7 @@ class NumericBadConsequence < BadConsequence
     return @nHiddenTreasures
   end
   
-  def adjustToFitTreasureList(v,h) #tanto v como h son vectores de tipo Treasure(cambiar nombre de la variable al implementar)
+  def adjustToFitTreasureList(v,h) #tanto v como h son vectores de tipo Treasure
    
       visibles = 0
       ocultos = 0
@@ -53,7 +52,7 @@ class NumericBadConsequence < BadConsequence
         ocultos = tamO
       end
       
-      bs = new("",0, visibles, ocultos) 
+      bs = NumericBadConsequence.new("",0, visibles, ocultos) 
     
     
     return bs

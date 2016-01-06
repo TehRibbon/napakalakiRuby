@@ -6,7 +6,7 @@
 
 class BadConsequence
   attr_accessor :text, :levels
-  @@MAXTREASURES = 10
+  MAXTREASURES = 10
   
   
   def initialize(text, levels)
@@ -14,10 +14,11 @@ class BadConsequence
     @levels = levels
     
   end
-  private_class_method :new 
+  private_class_method :new  
+    
   
   def getMAXTREASURES
-    @@MAXTREASURES
+    MAXTREASURES
   end
   
   #Devuelve true cuando el mal rollo que tiene que cumplir el jugador está vacío, eso

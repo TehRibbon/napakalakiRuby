@@ -8,16 +8,17 @@ class SpecificBadConsequence < BadConsequence
   
   def initialize(text, levels, someSpecificVisibleTreasures, someSpecificHiddenTreasures)
     super(text, levels)
-    @specificHiddenTreasures = someSpecificHiddenTreasures
     @specificVisibleTreasures = someSpecificVisibleTreasures
+    @specificHiddenTreasures = someSpecificHiddenTreasures
+    #ERROR: -> Los dos primeros elementos de someSpecificVisibleTreasures y de someHiddenTreasures siempre vale 0, por lo tanto falla en ocasiones al encontrarse este valor
+    puts @specificHiddenTreasures
   end
   public_class_method :new
   
   def isEmpty
+    empty = false
     if(@specificVisibleTreasures.empty? && @specificHiddenTreasures.empty?) then
       empty = true
-    else
-      empty = false
     end
     
     return empty

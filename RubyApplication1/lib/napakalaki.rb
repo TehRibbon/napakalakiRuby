@@ -168,9 +168,6 @@ require "singleton"
       setEnemies()
       @dealer.initCards()
       nextTurn()
-      
-
-
     end
 
     #Devuelve el jugador actual (currentPlayer).
