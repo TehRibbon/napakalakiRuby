@@ -19,8 +19,8 @@ class Player
   #Constructor
   def initialize(name)
     @name = name
-    @pendingBadConsequence = SpecificBadConsequence.new("",0,0,0)
     @level = 1
+    @pendingBadConsequence = SpecificBadConsequence.new("",0,[],[])
     @dead = true
     @canISteal = true
     @hiddenTreasures = []
@@ -120,7 +120,7 @@ class Player
   private :applyPrize
   
   def applyBadConsequence(monster)
-    badConsequence = monster.getBadConsequence()
+    badConsequence = monster.getBadConsequence
     nLevels = badConsequence.getLevels()
     decrementLevels(nLevels)
     
@@ -316,7 +316,7 @@ class Player
   end
   #Devuelve el nivel del jugador
   def getLevels
-    return level
+    return @level
   end
   
   def stealTreasure()

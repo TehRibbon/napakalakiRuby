@@ -43,7 +43,7 @@ class Monster
   end
   
   def getBadConsequence
-    return malRollo 
+    return @malRollo 
   end
   
   def to_s

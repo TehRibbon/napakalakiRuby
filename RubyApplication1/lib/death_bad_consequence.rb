@@ -27,6 +27,8 @@ class DeathBadConsequence < NumericBadConsequence
   
   def to_s
     
-    "\nMuerte: #{@death}"
+    "#{@text} 
+    Niveles que se pierden = #{@levels}
+    \nMuerte: #{@death}"
   end
 end

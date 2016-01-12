@@ -61,7 +61,9 @@ class NumericBadConsequence < BadConsequence
   
   def to_s
     
-    "\nTesoros visibles que se pierden = #{@nVisiblesTreasures} 
+    "#{@text} 
+    Niveles que se pierden = #{@levels}
+    \nTesoros visibles que se pierden = #{@nVisiblesTreasures} 
     Tesoros ocultos que se pierden = #{@nHiddenTreasures}"
     
   end

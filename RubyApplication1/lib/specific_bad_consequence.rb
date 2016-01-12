@@ -10,8 +10,7 @@ class SpecificBadConsequence < BadConsequence
     super(text, levels)
     @specificVisibleTreasures = someSpecificVisibleTreasures
     @specificHiddenTreasures = someSpecificHiddenTreasures
-    #ERROR: -> Los dos primeros elementos de someSpecificVisibleTreasures y de someHiddenTreasures siempre vale 0, por lo tanto falla en ocasiones al encontrarse este valor
-    puts @specificHiddenTreasures
+    
   end
   public_class_method :new
   
@@ -41,23 +40,25 @@ class SpecificBadConsequence < BadConsequence
   end
   
   def adjustToFitTreasureList(v,h) #tanto v como h son vectores de tipo Treasure(cambiar nombre de la variable al implementar)
-    
+    puts "ESTOY EN ADJUST"
     tVisible = Array.new
     tHidden = Array.new
-    
     v.each do |t|
       if(tVisible.index(t.type) == nil) then
+      #if(@specificVisibleTreasures.include?(t.type))
         tVisible << t.type
       end
     end
     
     h.each do |t|
       if(tHidden.index(t.type) == nil) then
+      #if(@specificHiddenTreasures.include?(t.type))
         tHidden << t.type
       end
     end
-    
+    puts "HELLOOOooooooooooooooooooooooooooooooooooooooooooooooooooooooo"
     bs = SpecificBadConsequence.new("", 0, tVisible, tHidden)
+    puts bs
   
     return bs
   
@@ -66,6 +67,8 @@ class SpecificBadConsequence < BadConsequence
   def to_s
     
     "\n
+    #{@text} 
+    Niveles que se pierden = #{@levels}
     Tesoros visibles especificos que se pierden = #{@specificVisibleTreasures}
     Tesoros ocultos especificos que se pierden = #{@specificHiddenTreasures}"
   end
